@@ -3,9 +3,9 @@ module.exports = {
     // Some useful comment
   },
   variants: {
-    // Some useful comment
+    backgroundColor: ['responsive', 'hover', 'focus', 'active'],
   },
   plugins: [
     // Some useful comment
   ],
-}
+};

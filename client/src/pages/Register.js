@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { styles } from '../css/styles';
 
 const Register = () => {
   //COMPONENT LEVEL STATE
@@ -36,14 +37,11 @@ const Register = () => {
     }
   };
   return (
-    <div>
+    <section>
       <h1 className='text-left text-3xl my-3'>
         <span className='font-semibold'>Lets Get Started</span>
       </h1>
-      <form
-        className='bg-white shadow-xl rounded px-8 pt-6 pb-8 mb-4'
-        onSubmit={handleSubmit}
-      >
+      <form className={styles.card} onSubmit={handleSubmit}>
         <div className='flex'>
           <div className='w-1/2 mx-6'>
             <h3 className='text-left text-gray-700 font-bold text-xl my-2'>
@@ -56,7 +54,7 @@ const Register = () => {
               <div className='flex'>
                 <div className='mr-2'>
                   <input
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    className={styles.textInput}
                     id='firstName'
                     type='text'
                     name='firstName'
@@ -68,7 +66,7 @@ const Register = () => {
                 </div>
                 <div className='ml-2'>
                   <input
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    className={styles.textInput}
                     id='lastName'
                     type='text'
                     name='lastName'
@@ -88,7 +86,7 @@ const Register = () => {
                 Phone
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'
+                className={styles.textInput}
                 id='phone'
                 type='text'
                 name='phone'
@@ -107,7 +105,7 @@ const Register = () => {
                 Date of Birth
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'
+                className={styles.textInput}
                 id='dob'
                 type='tel'
                 name='dob'
@@ -123,7 +121,7 @@ const Register = () => {
               <div className='flex'>
                 <div className='mr-2'>
                   <input
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'
+                    className={styles.textInput}
                     id='street'
                     type='text'
                     name='street'
@@ -134,7 +132,7 @@ const Register = () => {
                 </div>
                 <div className='ml-2'>
                   <input
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'
+                    className={styles.textInput}
                     id='city'
                     type='text'
                     name='city'
@@ -145,7 +143,7 @@ const Register = () => {
                 </div>
               </div>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'
+                className={styles.textInput}
                 id='province'
                 type='text'
                 name='province'
@@ -154,7 +152,7 @@ const Register = () => {
                 onChange={handleProfile}
               />
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'
+                className={styles.textInput}
                 id='country'
                 type='text'
                 name='country'
@@ -163,7 +161,7 @@ const Register = () => {
                 onChange={handleProfile}
               />
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'
+                className={styles.textInput}
                 id='zip'
                 type='text'
                 name='zip'
@@ -186,7 +184,7 @@ const Register = () => {
                 Email
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className={styles.textInput}
                 id='email'
                 type='email'
                 name='email'
@@ -203,7 +201,7 @@ const Register = () => {
                 Password
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'
+                className={styles.textInput}
                 id='password'
                 type='password'
                 name='password'
@@ -220,7 +218,7 @@ const Register = () => {
                 Password Confirmation
               </label>
               <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'
+                className={styles.textInput}
                 id='password'
                 type='password'
                 name='password2'
@@ -234,19 +232,14 @@ const Register = () => {
 
         <div className='flex items-center justify-between'>
           <Link to='/login'>
-            <button className='bg-white hover:bg-gray-200 border text-blue-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>
-              Back
-            </button>
+            <button className={styles.buttonLight}>Back</button>
           </Link>
-          <button
-            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-            type='submit'
-          >
+          <button className={styles.buttonPrimary} type='submit'>
             Continue
           </button>
         </div>
       </form>
-    </div>
+    </section>
   );
 };
 

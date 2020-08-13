@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import NewAccount from './pages/NewAccount';
 import Navbar from './components/Navbar';
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/dashboard' component={Dashboard} />
+            <Route exact path='/newAccount' component={NewAccount} />
           </Switch>
         </div>
       </Router>
