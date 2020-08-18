@@ -14,6 +14,26 @@ const Register = () => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
+  const formCheck = () => {
+    if (
+      profile.firstName &&
+      profile.lastName &&
+      profile.phone &&
+      profile.dob &&
+      profile.street &&
+      profile.province &&
+      profile.country &&
+      profile.zip &&
+      credentials.email &&
+      credentials.password &&
+      credentials.password2
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -37,7 +57,7 @@ const Register = () => {
     }
   };
   return (
-    <section>
+    <section className='container w-11/12 mx-auto flex flex-col flex-auto justify-center items-center'>
       <h1 className='text-left text-3xl my-3'>
         <span className='font-semibold'>Lets Get Started</span>
       </h1>
@@ -107,9 +127,8 @@ const Register = () => {
               <input
                 className={styles.textInput}
                 id='dob'
-                type='tel'
+                type='date'
                 name='dob'
-                placeholder='January 1, 1900'
                 required
                 onChange={handleProfile}
               />
@@ -234,7 +253,12 @@ const Register = () => {
           <Link to='/login'>
             <button className={styles.buttonLight}>Back</button>
           </Link>
-          <button className={styles.buttonPrimary} type='submit'>
+          <button
+            className={
+              formCheck() ? styles.buttonPrimary : styles.buttonDisabled
+            }
+            type='submit'
+          >
             Continue
           </button>
         </div>
