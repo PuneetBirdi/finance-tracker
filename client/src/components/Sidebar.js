@@ -7,8 +7,8 @@ import { BsGraphUp } from 'react-icons/bs';
 
 const Sidebar = (props) => {
   return (
-    <aside className='bg-gray-700 h-screen absolute top-0 left-0 shadow-xl font-semibold'>
-      <ul className='my-16 w-full'>
+    <aside className='bg-gray-700 h-screen top-0 shadow-xl font-semibold'>
+      <ul className=' mt-4 w-full'>
         <Link>
           <li className='pl-4 pr-4 py-2 hover:bg-blue-600 flex items-center'>
             <FaHome style={{ marginRight: 8 }} />

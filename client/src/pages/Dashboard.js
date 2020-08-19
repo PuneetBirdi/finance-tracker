@@ -6,7 +6,7 @@ import Sidebar from '../components/Sidebar';
 
 const Dashboard = (props) => {
   return (
-    <section className='container static w-full flex flex-col flex-auto'>
+    <section className='container static w-full flex flex-auto'>
       <Sidebar />
     </section>
   );
