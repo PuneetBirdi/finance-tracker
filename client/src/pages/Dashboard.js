@@ -1,13 +1,17 @@
 import React from 'react';
-import { Switch, Route, Router, Link, Redirect } from 'react-router-dom';
-import PrivateRoute from '../routing/PrivateRoute';
+import { Switch, Route, useRouteMatch, Link, Redirect } from 'react-router-dom';
+import Overview from './Overview';
 //SUBPAGES============
 import Sidebar from '../components/Sidebar';
 
 const Dashboard = (props) => {
+  const { path, url } = useRouteMatch();
   return (
-    <section className='container static w-full flex flex-auto'>
+    <section className='container static flex-1 h-full max-h-full min-w-full flex'>
       <Sidebar />
+      <Switch>
+        <Route exact path={`${path}/`} component={Overview} />
+      </Switch>
     </section>
   );
 };

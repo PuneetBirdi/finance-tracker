@@ -5,11 +5,19 @@ const Transaction = require('../models/Transaction');
 const auth = require('../middleware/auth');
 
 //@route    POST api/contacts
-//@desc     Add new contact
+//@desc     Add new transaction
 //@access   Private
 router.post(
   '/',
-  [auth, [check('name', 'Name is required').not().isEmail()]],
+  [
+    auth,
+    [
+      check('description', 'Description is required').not().isEmail(),
+      check('amount', 'Amount is required').not().isEmpty(),
+      check('type', 'Define transaction type.').not().isEmpty(),
+      check('account', 'Transaction account must be defined.').not().isEmpty(),
+    ],
+  ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

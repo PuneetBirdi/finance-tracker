@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { styles } from '../css/styles';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setAlert } from '../actions/alert';
+import { register } from '../actions/auth';
 
-const Register = () => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   //COMPONENT LEVEL STATE
   const [credentials, setCredentials] = useState({});
   const [profile, setProfile] = useState({});
@@ -267,4 +271,13 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+export default connect(mapStateToProps, { setAlert, register })(Register);

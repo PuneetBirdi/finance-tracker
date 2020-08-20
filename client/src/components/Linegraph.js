@@ -57,38 +57,24 @@ const Linegraph = (props) => {
   ];
 
   return (
-    <div className='rounded-lg text-gray-600 bg-white shadow-xl px-6 pt-4 pb-6 mb-4 w-full h-full'>
-      <div>
-        <p className='text-xs tracking-tight text-gray-600 font-semibold text-right'>
-          Portfolio Value:
-        </p>
-        <p className='text-3xl tracking-tight text-gray-800 font-bold text-right'>
-          $560,260.15
-        </p>
-      </div>
-      <div style={{ width: '100%', height: 300 }}>
-        <ResponsiveContainer>
-          <AreaChart
-            data={data}
-            margin={{
-              top: 30,
-              right: 30,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <XAxis dataKey='name' />
-            <YAxis />
-            <Tooltip />
-            <Area
-              type='monotone'
-              dataKey='uv'
-              stroke='#3182CE'
-              fill='#4299E1'
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
+    <div style={{ width: '100%', height: 450 }}>
+      <ResponsiveContainer>
+        <AreaChart
+          data={data}
+          margin={{
+            top: 10,
+            right: 10,
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <CartesianGrid strokeDasharray='3 3' />
+          <XAxis dataKey='name' />
+          <YAxis />
+          <Tooltip />
+          <Area type='monotone' dataKey='uv' stroke='#3182CE' fill='#4299E1' />
+        </AreaChart>
+      </ResponsiveContainer>
     </div>
   );
 };
