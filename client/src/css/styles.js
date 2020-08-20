@@ -13,4 +13,5 @@ export const styles = {
   card: 'bg-white shadow-xl rounded px-8 pt-6 pb-8 mb-4',
   //TYPOGRAPHY===========================
   H3: 'text-left text-gray-700 font-bold text-xl my-2',
+  H1: 'text-left text-gray-700 font-bold text-3xl my-2',
 };

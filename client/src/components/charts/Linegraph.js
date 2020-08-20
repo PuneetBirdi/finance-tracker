@@ -63,13 +63,13 @@ const Linegraph = (props) => {
           data={data}
           margin={{
             top: 10,
-            right: 10,
+            right: 20,
             left: 0,
             bottom: 0,
           }}
         >
           <CartesianGrid strokeDasharray='3 3' />
-          <XAxis dataKey='name' />
+          <XAxis />
           <YAxis />
           <Tooltip />
           <Area type='monotone' dataKey='uv' stroke='#3182CE' fill='#4299E1' />

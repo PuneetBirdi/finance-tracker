@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SmallChart from './SmallChart';
+import SmallChart from '../charts/SmallChart';
 
 const TransactionList = (props) => {
   return (

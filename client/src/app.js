@@ -10,7 +10,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import NewAccount from './pages/NewAccount';
-import Navbar from './components/Navbar';
+import Navbar from './components/layout/Navbar';
 //IMPORT REDUX/STATE MANAGEMENT COMPONENTS
 import { Provider } from 'react-redux';
 import { loadUser } from './actions/auth';

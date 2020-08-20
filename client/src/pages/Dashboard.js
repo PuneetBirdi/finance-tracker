@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, useRouteMatch, Link, Redirect } from 'react-router-dom';
 import Overview from './Overview';
 //SUBPAGES============
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/layout/Sidebar';
 
 const Dashboard = (props) => {
   const { path, url } = useRouteMatch();
