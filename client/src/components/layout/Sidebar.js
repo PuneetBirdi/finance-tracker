@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route, Router, Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { GiPayMoney, GiTakeMyMoney } from 'react-icons/gi';
 import {
   FaNewspaper,
