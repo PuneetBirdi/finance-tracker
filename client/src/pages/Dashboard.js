@@ -11,8 +11,6 @@ const Dashboard = (props) => {
     <section className='container static flex-1 h-full max-h-full min-w-full flex'>
       <Sidebar />
       <Overview />
-      {/* <TransactionInput /> */}
-      {/* <NewAccountModal /> */}
     </section>
   );
 };

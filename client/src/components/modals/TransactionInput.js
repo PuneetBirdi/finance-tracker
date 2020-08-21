@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const TransactionInput = ({ closeModal }) => {
+  const [transaction, setTransaction] = useState({});
+
+  const handleInput = (e) => {
+    setTransaction({ ...transaction, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    console.log(transaction);
+  };
   return (
     <div className='fixed top-0 bg-opaque h-screen w-screen z-10 flex justify-center items-center'>
-      <form className='bg-white shadow-xl rounded px-8 pt-6 pb-6 flex flex-col'>
+      <form
+        className='bg-white shadow-xl rounded px-8 pt-6 pb-6 flex flex-col'
+        onSubmit={handleSubmit}
+      >
         <div className='self-start w-full mb-6'>
           <h3 className='text-gray-700 text-center font-bold'>
             New Transaction
@@ -14,15 +26,17 @@ const TransactionInput = ({ closeModal }) => {
           <div className='mb-4'>
             <label
               className='block text-gray-600 text-sm font-bold mb-2'
-              for='name'
+              for='description'
             >
               Description
             </label>
             <input
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              id='transactionName'
+              id='description'
+              name='description'
               type='text'
               placeholder='New Laptop'
+              onChange={handleInput}
             />
           </div>
           <div className='mb-2'>
@@ -35,8 +49,10 @@ const TransactionInput = ({ closeModal }) => {
             <input
               className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'
               id='amount'
+              name='amount'
               type='number'
               placeholder='00.00'
+              onChange={handleInput}
             />
           </div>
         </div>
@@ -44,7 +60,7 @@ const TransactionInput = ({ closeModal }) => {
           <div className='w-full mb-6'>
             <label
               className='block text-gray-600 text-sm font-bold mb-2'
-              for='amount'
+              for='type'
             >
               Type
             </label>
@@ -52,10 +68,16 @@ const TransactionInput = ({ closeModal }) => {
               <select
                 className='block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-2 px-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
                 id='account'
+                name='type'
+                onChange={handleInput}
+                value={transaction.type}
               >
-                <option>Deposit</option>
-                <option>Withdrawal</option>
-                <option>Purchase</option>
+                <option value={null} disabled defaultValue>
+                  Select Type
+                </option>
+                <option value='deposit'>Deposit</option>
+                <option value='withdrawal'>Withdrawal</option>
+                <option value='purchase'>Purchase</option>
               </select>
               <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
                 <svg
@@ -71,7 +93,7 @@ const TransactionInput = ({ closeModal }) => {
           <div className='w-full mb-6'>
             <label
               className='block text-gray-600 text-sm font-bold mb-2'
-              for='amount'
+              for='account'
             >
               Account
             </label>
@@ -79,10 +101,13 @@ const TransactionInput = ({ closeModal }) => {
               <select
                 className='block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-2 px-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
                 id='account'
+                name='account'
+                onChange={handleInput}
               >
-                <option>Deposit</option>
-                <option>Withdrawal</option>
-                <option>Purchase</option>
+                <option value='432425'>Account One</option>
+                <option value='432325'>Account Two</option>
+                <option value='532425'>Account Three</option>
+                <option value='000925'>Account Four</option>
               </select>
               <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
                 <svg
