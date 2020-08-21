@@ -37,7 +37,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   return (
     <nav className='w-full flex items-center justify-between flex-wrap bg-gray-800 p-3 shadow-xl z-50'>
       <div className='flex flex-1 items-center flex-shrink-0 text-white mr-6'>
-        <span className='text-2xl tracking-tight z-50 bg-transparent'>
+        <span className='text-2xl tracking-tight z-20 bg-transparent'>
           <span className='font-bold'>Finance</span>Tracker
         </span>
       </div>

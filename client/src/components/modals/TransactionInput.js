@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TransactionInput = (props) => {
+const TransactionInput = ({ closeModal }) => {
   return (
-    <div className='fixed bg-opaque h-screen w-screen z-10 flex justify-center items-center'>
-      <form className='bg-white shadow-xl rounded px-8 pt-6 pb-8 flex flex-col'>
-        <div className='self-start w-full mb-12'>
+    <div className='fixed top-0 bg-opaque h-screen w-screen z-10 flex justify-center items-center'>
+      <form className='bg-white shadow-xl rounded px-8 pt-6 pb-6 flex flex-col'>
+        <div className='self-start w-full mb-6'>
           <h3 className='text-gray-700 text-center font-bold'>
             New Transaction
           </h3>
@@ -99,6 +99,7 @@ const TransactionInput = (props) => {
             <button
               className='bg-white hover:bg-red-300 border text-red-500 font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
               type='button'
+              onClick={closeModal}
             >
               Cancel
             </button>

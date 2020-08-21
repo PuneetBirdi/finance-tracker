@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { GiPayMoney, GiTakeMyMoney } from 'react-icons/gi';
@@ -10,8 +10,13 @@ import {
   FaPlus,
 } from 'react-icons/fa';
 import { BsGraphUp } from 'react-icons/bs';
+import TransactionInput from '../modals/TransactionInput';
+import NewAccountModal from '../modals/NewAccountModal';
 
 const Sidebar = (props) => {
+  const [transactionModal, setTransactionModal] = useState(false);
+  const [accountModal, setAccountModal] = useState(false);
+
   return (
     <aside className='bg-gray-700 shadow-xl font-normal'>
       <ul className=' mt-4 w-full'>
@@ -28,7 +33,10 @@ const Sidebar = (props) => {
           </li>
         </Link>
         <Link>
-          <li className='pl-4  py-2 hover:bg-green-600 flex items-center'>
+          <li
+            className='pl-4  py-2 hover:bg-green-600 flex items-center'
+            onClick={(e) => setTransactionModal(!transactionModal)}
+          >
             <GiPayMoney style={{ marginRight: 8 }} /> Deposit
           </li>
         </Link>
@@ -48,10 +56,13 @@ const Sidebar = (props) => {
                 <FaRegMoneyBillAlt style={{ marginRight: 8 }} />
                 Chequing
               </li>
-              <li className='px-4 py-2 my-2 rounded-full flex items-center align-center hover:bg-gray-800 font-thin'>
+              <button
+                className='px-4 py-2 my-2 rounded-full flex items-center align-center hover:bg-gray-800 font-thin'
+                onClick={(e) => setAccountModal(!accountModal)}
+              >
                 <FaPlus style={{ marginRight: 8 }} />
                 New Account
-              </li>
+              </button>
             </Link>
           </ul>
         </li>
@@ -67,6 +78,14 @@ const Sidebar = (props) => {
           </ul>
         </li>
       </ul>
+      {transactionModal ? (
+        <TransactionInput
+          closeModal={() => setTransactionModal(!transactionModal)}
+        />
+      ) : null}
+      {accountModal ? (
+        <NewAccountModal closeModal={() => setAccountModal(!accountModal)} />
+      ) : null}
     </aside>
   );
 };

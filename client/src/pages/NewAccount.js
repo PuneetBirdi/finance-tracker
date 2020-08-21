@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { styles } from '../css/styles';
 
-const NewAccount = () => {
+const NewAccount = ({ closeModal }) => {
   const [accountInfo, setAccountInfo] = useState({});
 
   const handleType = (e) => {
@@ -104,7 +104,14 @@ const NewAccount = () => {
           </div>
         </div>
       </fieldset>
-      <div className='flex items-center justify-end'>
+      <div className='flex items-center justify-between'>
+        <button
+          className='bg-white hover:bg-red-300 border text-red-500 font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+          type='none'
+          onClick={closeModal}
+        >
+          Cancel
+        </button>
         <button
           className={formCheck() ? styles.buttonPrimary : styles.buttonDisabled}
           type='submit'
