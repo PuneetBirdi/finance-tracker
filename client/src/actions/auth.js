@@ -12,20 +12,20 @@ import {
 } from './types';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
+import { loadPortfolio } from './portfolio';
 
 //Load user
 export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
-
-  console.log('test');
   try {
     const res = await axios.get('/api/auth');
     dispatch({
       type: USER_LOADED,
       payload: res.data,
     });
+    dispatch(loadPortfolio());
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,

@@ -14,20 +14,31 @@ import TransactionInput from '../modals/TransactionInput';
 import NewAccountModal from '../modals/NewAccountModal';
 
 const Sidebar = (props) => {
-  const [transactionModal, setTransactionModal] = useState(false);
+  const [transactionModal, setTransactionModal] = useState({
+    open: false,
+    type: null,
+  });
   const [accountModal, setAccountModal] = useState(false);
 
   return (
     <aside className='bg-gray-700 shadow-xl font-normal'>
       <ul className=' mt-4 w-full'>
-        <Link>
+        <Link to='/'>
           <li className='pl-4 pr-4 py-2 hover:bg-blue-600 flex items-center'>
             <FaHome style={{ marginRight: 8 }} />
-            Home
+            Overview
           </li>
         </Link>
         <Link>
-          <li className='pl-4  py-2 hover:bg-red-600 flex items-center'>
+          <li
+            className='pl-4  py-2 hover:bg-red-600 flex items-center'
+            onClick={(e) =>
+              setTransactionModal({
+                open: true,
+                type: 'withdrawal',
+              })
+            }
+          >
             <GiTakeMyMoney style={{ marginRight: 8 }} />
             Withdraw
           </li>
@@ -35,7 +46,12 @@ const Sidebar = (props) => {
         <Link>
           <li
             className='pl-4  py-2 hover:bg-green-600 flex items-center'
-            onClick={(e) => setTransactionModal(!transactionModal)}
+            onClick={(e) =>
+              setTransactionModal({
+                open: true,
+                type: 'deposit',
+              })
+            }
           >
             <GiPayMoney style={{ marginRight: 8 }} /> Deposit
           </li>
@@ -78,9 +94,10 @@ const Sidebar = (props) => {
           </ul>
         </li>
       </ul>
-      {transactionModal ? (
+      {transactionModal.open ? (
         <TransactionInput
           closeModal={() => setTransactionModal(!transactionModal)}
+          type={transactionModal.type}
         />
       ) : null}
       {accountModal ? (

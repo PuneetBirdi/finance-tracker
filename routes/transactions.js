@@ -59,6 +59,7 @@ router.post(
         },
         { new: true }
       );
+      console.log(transaction);
       res.json(transaction);
     } catch (err) {
       console.error(err.message);
@@ -66,4 +67,18 @@ router.post(
     }
   }
 );
+
+//@route    GET api/transactions
+//@desc     Add new transaction
+//@access   Private
+router.get('/:id', auth, async (req, res) => {
+  try {
+    const accounts = await Transaction.find({ account: req.params.id });
+
+    res.json(accounts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
 module.exports = router;

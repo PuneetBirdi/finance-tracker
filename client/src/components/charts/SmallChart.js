@@ -2,36 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { AreaChart, Area } from 'recharts';
 
-const data = [
-  {
-    uv: 4000,
-  },
-  {
-    uv: 3000,
-  },
-  {
-    uv: 2000,
-  },
-  {
-    uv: 2780,
-  },
-  {
-    uv: 1890,
-  },
-  {
-    uv: 2390,
-  },
-  {
-    uv: 3490,
-  },
-];
-
-const SmallChart = ({ color }) => {
+const SmallChart = ({ color, snapshots }) => {
   return (
     <AreaChart
       width={200}
       height={30}
-      data={data}
+      data={snapshots}
       margin={{
         top: 5,
         right: 0,
@@ -39,7 +15,7 @@ const SmallChart = ({ color }) => {
         bottom: 5,
       }}
     >
-      <Area type='monotone' dataKey='uv' stroke={color} fill={color} />
+      <Area type='monotone' dataKey='balance' stroke={color} fill={color} />
     </AreaChart>
   );
 };

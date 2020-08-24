@@ -17,18 +17,35 @@ router.get('/', auth, async (req, res) => {
   try {
     //Find by ID is just querying, based on the ID that was returned from the decoded JWT from te middleware.
     const user = await User.findById(req.user.id).select('-password');
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: 'Server Error' });
+  }
+});
+
+//@route    GET api/auth
+//@desc     Get logged in user
+//@access   Private
+router.get('/portfolio', auth, async (req, res) => {
+  //The 'auth' in above refers to the middleware in a another, it functions the same way the "check" methods below function, as a second argument to the router.
+  try {
+    //Find by ID is just querying, based on the ID that was returned from the decoded JWT from te middleware.
+    const user = await User.findById(req.user.id).select('-password');
     const accounts = await Account.find({ user: req.user.id }).select([
       '-created',
-      '-_id',
       '-__v',
       '-transactions',
+      '-user',
     ]);
     const profile = await Profile.find({ user: req.user.id });
     const result = {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      portfolio: accounts.reduce((prev, curr) => {
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+      totalValue: accounts.reduce((prev, curr) => {
         return prev + curr.balance;
       }, 0),
       created: user.created,

@@ -14,7 +14,6 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   error: null,
-  user: null,
 };
 
 export default function(state = initialState, action) {
@@ -25,7 +24,10 @@ export default function(state = initialState, action) {
       localStorage.setItem('token', payload.token);
       return {
         ...state,
-        ...payload,
+        token: payload.token,
+        user_id: payload._id,
+        created: payload.created,
+        email: payload.email,
         error: null,
         isAuthenticated: true,
       };
@@ -48,7 +50,10 @@ export default function(state = initialState, action) {
         isAuthenticated: true,
         loading: false,
         error: null,
-        user: payload,
+        token: payload.token,
+        user_id: payload._id,
+        created: payload.created,
+        email: payload.email,
       };
     case SET_LOADING:
       return {

@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { newTransaction } from '../../actions/transaction';
 
-const TransactionInput = ({ closeModal }) => {
-  const [transaction, setTransaction] = useState({});
+const TransactionInput = ({ closeModal, accounts, type, newTransaction }) => {
+  const [transaction, setTransaction] = useState({
+    description: '',
+    amount: '',
+    type: type,
+    account: '',
+  });
 
   const handleInput = (e) => {
     setTransaction({ ...transaction, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    console.log(transaction);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    newTransaction(transaction);
   };
   return (
     <div className='fixed top-0 bg-opaque h-screen w-screen z-10 flex justify-center items-center'>
@@ -51,6 +59,7 @@ const TransactionInput = ({ closeModal }) => {
               id='amount'
               name='amount'
               type='number'
+              step='.01'
               placeholder='00.00'
               onChange={handleInput}
             />
@@ -67,7 +76,7 @@ const TransactionInput = ({ closeModal }) => {
             <div className='relative'>
               <select
                 className='block appearance-none w-full bg-gray-100 border border-gray-200 text-gray-700 py-2 px-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-                id='account'
+                id='type'
                 name='type'
                 onChange={handleInput}
                 value={transaction.type}
@@ -103,11 +112,19 @@ const TransactionInput = ({ closeModal }) => {
                 id='account'
                 name='account'
                 onChange={handleInput}
+                value={transaction.account}
+                required
               >
-                <option value='432425'>Account One</option>
-                <option value='432325'>Account Two</option>
-                <option value='532425'>Account Three</option>
-                <option value='000925'>Account Four</option>
+                <option value='' disabled defaultValue>
+                  Select Account
+                </option>
+                {accounts.map((account) => {
+                  return (
+                    <option value={account._id} key={account._id}>
+                      {account.name}
+                    </option>
+                  );
+                })}
               </select>
               <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
                 <svg
@@ -130,7 +147,7 @@ const TransactionInput = ({ closeModal }) => {
             </button>
             <button
               className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-              type='button'
+              type='submit'
             >
               Submit
             </button>
@@ -141,6 +158,13 @@ const TransactionInput = ({ closeModal }) => {
   );
 };
 
-TransactionInput.propTypes = {};
+TransactionInput.propTypes = {
+  accounts: PropTypes.array.isRequired,
+  newTransaction: PropTypes.func.isRequired,
+};
 
-export default TransactionInput;
+const mapStateToProps = (state) => ({
+  accounts: state.portfolio.accounts,
+});
+
+export default connect(mapStateToProps, { newTransaction })(TransactionInput);

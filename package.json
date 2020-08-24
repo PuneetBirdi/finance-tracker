@@ -4,6 +4,7 @@
   "description": "Finance Tracking / Banking Application",
   "main": "server.js",
   "dependencies": {
+    "accounting": "^0.4.1",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.2.0",
     "config": "^3.3.1",

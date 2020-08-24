@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from 'recharts';
 
-const Linegraph = (props) => {
+const Linegraph = ({ accounts }) => {
   const data = [
     {
       name: 'Page A',

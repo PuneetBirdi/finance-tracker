@@ -235,13 +235,13 @@ const Register = ({ loading, user, register, isAuthenticated }) => {
             <div className='mb-6'>
               <label
                 className='block text-gray-700 text-sm font-bold mb-2'
-                htmlFor='password'
+                htmlFor='password2'
               >
                 Password Confirmation
               </label>
               <input
                 className={styles.textInput}
-                id='password'
+                id='password2'
                 type='password'
                 name='password2'
                 placeholder='******************'
