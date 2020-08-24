@@ -38,7 +38,6 @@ router.post(
       });
 
       const account = await newAccount.save();
-
       res.json(account);
     } catch (err) {
       console.error(err.message);
@@ -46,5 +45,38 @@ router.post(
     }
   }
 );
+
+//@router      GET api/accounts
+//@desc        Get all accounts
+//@access      Private
+router.get('/', auth, async (req, res) => {
+  try {
+    const accounts = await Account.find().sort({ date: -1 });
+    res.json(accounts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+//@router      GET api/accounts/:id
+//@desc        Get account by id
+//@access      Private
+router.get('/:id', auth, async (req, res) => {
+  try {
+    const account = await Account.findById(req.params.id);
+
+    if (!account) {
+      return res.status(404).json({ msg: 'Account not found.' });
+    }
+    res.json(account);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Account not found.' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;

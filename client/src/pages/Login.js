@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../actions/auth';
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, loading, error, user }) => {
   //COMPONENT LEVEL STATE
   const [credentials, setCredentials] = useState({
     email: '',
@@ -64,15 +64,50 @@ const Login = ({ login, isAuthenticated }) => {
               onChange={handleInput}
             />
           </div>
+          {error ? (
+            <div className='w-full text-red-600 text-center mb-3'>
+              <p className='text-sm font-semibold'>{error}</p>
+            </div>
+          ) : null}
           <div className='flex items-center justify-between'>
             <Link to='/register'>
               <button className={styles.buttonLight} type='none'>
                 Register
               </button>
             </Link>
-            <button className={styles.buttonPrimary} type='submit'>
-              Log In
-            </button>
+            {loading ? (
+              <button
+                className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center'
+                type='none'
+                disabled
+              >
+                <svg
+                  class='animate-spin -ml-1 mr-3 h-5 w-5 text-white'
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                >
+                  <circle
+                    class='opacity-25'
+                    cx='12'
+                    cy='12'
+                    r='10'
+                    stroke='currentColor'
+                    stroke-width='4'
+                  ></circle>
+                  <path
+                    class='opacity-75'
+                    fill='currentColor'
+                    d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+                  ></path>
+                </svg>
+                Loading
+              </button>
+            ) : (
+              <button className={styles.buttonPrimary} type='submit'>
+                Login
+              </button>
+            )}
           </div>
         </form>
       </div>
@@ -83,10 +118,14 @@ const Login = ({ login, isAuthenticated }) => {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading,
+  error: state.auth.error,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { login })(Login);

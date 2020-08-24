@@ -3,8 +3,9 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
 const Transaction = require('../models/Transaction');
 const auth = require('../middleware/auth');
+const Account = require('../models/Account');
 
-//@route    POST api/contacts
+//@route    POST api/account/transaction
 //@desc     Add new transaction
 //@access   Private
 router.post(
@@ -26,6 +27,7 @@ router.post(
 
     const { account, amount, description, type } = req.body;
 
+    //build and save new transaction
     try {
       const newTransaction = new Transaction({
         account,
@@ -36,7 +38,22 @@ router.post(
       });
 
       const transaction = await newTransaction.save();
+      //update account balance and write a snapshot
+      const currentAccount = await Account.findByIdAndUpdate(
+        { _id: account },
+        {
+          $inc: { balance: transaction.amount },
+          $push: {
+            snapshots: {
+              balance: this.balance,
+              date: Date.now(),
+            },
+          },
+        },
+        { new: true }
+      );
 
+      console.log(currentAccount);
       res.json(transaction);
     } catch (err) {
       console.error(err.message);

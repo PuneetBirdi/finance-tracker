@@ -24,6 +24,18 @@ const AccountSchema = new mongoose.Schema({
     enum: ['savings', 'chequing', 'investing'],
     required: true,
   },
+  snapshots: [
+    {
+      date: {
+        type: Date,
+        required: true,
+      },
+      balance: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
   transactions: [
     {
       type: mongoose.Schema.Types.ObjectId,

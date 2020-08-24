@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
+const Account = require('../models/Account');
+const Profile = require('../models/Profile');
 
 //@route    GET api/auth
 //@desc     Get logged in user
@@ -15,7 +17,25 @@ router.get('/', auth, async (req, res) => {
   try {
     //Find by ID is just querying, based on the ID that was returned from the decoded JWT from te middleware.
     const user = await User.findById(req.user.id).select('-password');
-    res.json(user);
+    const accounts = await Account.find({ user: req.user.id }).select([
+      '-created',
+      '-_id',
+      '-__v',
+      '-transactions',
+    ]);
+    const profile = await Profile.find({ user: req.user.id });
+    const result = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      portfolio: accounts.reduce((prev, curr) => {
+        return prev + curr.balance;
+      }, 0),
+      created: user.created,
+      accounts: accounts,
+      profile: profile,
+    };
+    res.json(result);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ msg: 'Server Error' });

@@ -26,7 +26,7 @@ const data = [
   },
 ];
 
-const SmallChart = (props) => {
+const SmallChart = ({ color }) => {
   return (
     <AreaChart
       width={200}
@@ -39,7 +39,7 @@ const SmallChart = (props) => {
         bottom: 5,
       }}
     >
-      <Area type='monotone' dataKey='uv' stroke='#8884d8' fill='#8884d8' />
+      <Area type='monotone' dataKey='uv' stroke={color} fill={color} />
     </AreaChart>
   );
 };

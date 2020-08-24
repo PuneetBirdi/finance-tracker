@@ -7,6 +7,7 @@ import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT,
+  SET_LOADING,
   CLEAR_PROFILE,
 } from './types';
 import { setAlert } from './alert';
@@ -17,6 +18,8 @@ export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
+
+  console.log('test');
   try {
     const res = await axios.get('/api/auth');
     dispatch({
@@ -30,34 +33,33 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-//Register a User
-export const register = ({ name, email, password }) => async (dispatch) => {
+//Register User
+export const register = (formData) => async (dispatch) => {
+  dispatch(setLoading());
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-  const body = JSON.stringify({ name, email, password });
   try {
-    const res = await axios.post('api/users', body, config);
+    const res = await axios.post('api/users', formData, config);
+
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
-    dispatch(loadUser());
+    loadUser();
   } catch (err) {
-    const errors = err.response.data.errors;
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-    }
     dispatch({
       type: REGISTER_FAIL,
+      payload: err.response.data.msg,
     });
   }
 };
 
 //Login a User
 export const login = (email, password) => async (dispatch) => {
+  dispatch(setLoading());
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -78,6 +80,7 @@ export const login = (email, password) => async (dispatch) => {
     }
     dispatch({
       type: LOGIN_FAIL,
+      payload: err.response.data.msg,
     });
   }
 };
@@ -86,4 +89,9 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
+};
+
+//Set state to loading
+export const setLoading = () => async (dispatch) => {
+  dispatch({ type: SET_LOADING });
 };

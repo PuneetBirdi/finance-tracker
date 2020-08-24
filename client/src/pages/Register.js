@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { styles } from '../css/styles';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setAlert } from '../actions/alert';
 import { register } from '../actions/auth';
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = ({ loading, user, register, isAuthenticated }) => {
   //COMPONENT LEVEL STATE
   const [credentials, setCredentials] = useState({});
   const [profile, setProfile] = useState({});
@@ -25,6 +25,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       profile.phone &&
       profile.dob &&
       profile.street &&
+      profile.city &&
       profile.province &&
       profile.country &&
       profile.zip &&
@@ -34,7 +35,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     ) {
       return true;
     } else {
-      return false;
+      return true;
     }
   };
 
@@ -44,22 +45,29 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     if (credentials.password2 !== credentials.password) {
       console.log('ERROR: Passwords do not match.');
     } else {
-      const formattedProfile = {
+      const registration = {
+        email: credentials.email,
+        password: credentials.password,
         firstName: profile.firstName,
         lastName: profile.lastName,
         phone: profile.phone,
-        dob: Date(profile.dob).toISOString(),
+        dob: new Date(profile.dob).toISOString(),
         address: {
           street: profile.street,
+          city: profile.city,
           province: profile.province,
           country: profile.country,
           zip: profile.zip,
         },
       };
 
-      console.log(credentials, formattedProfile);
+      register(registration);
     }
   };
+
+  if (isAuthenticated) {
+    return <Redirect to='/newaccount' />;
+  }
   return (
     <section className='container w-11/12 mx-auto flex flex-col flex-auto justify-center items-center'>
       <h1 className='text-left text-3xl my-3'>
@@ -84,7 +92,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                     name='firstName'
                     placeholder='First'
                     value={profile.firstName}
-                    required
                     onChange={handleProfile}
                   />
                 </div>
@@ -96,7 +103,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                     name='lastName'
                     placeholder='Last'
                     value={profile.lastName}
-                    required
                     onChange={handleProfile}
                   />
                 </div>
@@ -117,7 +123,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 placeholder='123-456-7890'
                 pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
                 value={profile.phone}
-                required
                 onChange={handleProfile}
               />
             </div>
@@ -133,7 +138,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 id='dob'
                 type='date'
                 name='dob'
-                required
                 onChange={handleProfile}
               />
             </div>
@@ -149,7 +153,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                     type='text'
                     name='street'
                     placeholder='Street address'
-                    required
                     onChange={handleProfile}
                   />
                 </div>
@@ -160,7 +163,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                     type='text'
                     name='city'
                     placeholder='City'
-                    required
                     onChange={handleProfile}
                   />
                 </div>
@@ -171,7 +173,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 type='text'
                 name='province'
                 placeholder='State/Province'
-                required
                 onChange={handleProfile}
               />
               <input
@@ -180,7 +181,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 type='text'
                 name='country'
                 placeholder='Country'
-                required
                 onChange={handleProfile}
               />
               <input
@@ -190,7 +190,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 name='zip'
                 placeholder='ZIP Code'
                 pattern='^([ABCEGHJKLMNPRSTVXY][0-9][A-Z][ ]*[0-9][A-Z][0-9])$'
-                required
                 onChange={handleProfile}
               />
             </fieldset>
@@ -257,14 +256,44 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           <Link to='/login'>
             <button className={styles.buttonLight}>Back</button>
           </Link>
-          <button
-            className={
-              formCheck() ? styles.buttonPrimary : styles.buttonDisabled
-            }
-            type='submit'
-          >
-            Continue
-          </button>
+          {loading ? (
+            <button
+              className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center'
+              type='none'
+              disabled
+            >
+              <svg
+                class='animate-spin -ml-1 mr-3 h-5 w-5 text-white'
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+              >
+                <circle
+                  class='opacity-25'
+                  cx='12'
+                  cy='12'
+                  r='10'
+                  stroke='currentColor'
+                  stroke-width='4'
+                ></circle>
+                <path
+                  class='opacity-75'
+                  fill='currentColor'
+                  d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+                ></path>
+              </svg>
+              Processing
+            </button>
+          ) : (
+            <button
+              className={
+                formCheck() ? styles.buttonPrimary : styles.buttonDisabled
+              }
+              type='submit'
+            >
+              Continue
+            </button>
+          )}
         </div>
       </form>
     </section>
@@ -275,9 +304,13 @@ Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  loading: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading,
+  user: state.user,
 });
 export default connect(mapStateToProps, { setAlert, register })(Register);

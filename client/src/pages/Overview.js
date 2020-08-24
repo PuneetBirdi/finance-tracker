@@ -9,12 +9,15 @@ const Overview = (props) => {
   return (
     <section className='m-8 flex-1 w-screen'>
       <div className={styles.card.concat('w-full h-full flex flex-col')}>
-        <h3 className={styles.H1}>Overview</h3>
+        <div className='w-3/4 text-right mr-4'>
+          <p className='text-xs text-gray-700 font-bold'>Portfolio Value</p>
+          <h1 className='text-5xl font-bold text-gray-900'>$243,231.00</h1>
+        </div>
         <div class='flex flex-wrap'>
           <div class='w-3/4 h-1/2'>
             <Linegraph />
           </div>
-          <div class='w-1/4 flex flex-col justify-center'>
+          <div class='w-1/4 flex flex-col justify-between'>
             <Card
               title={'Portfolio Value'}
               color={'blue'}
@@ -23,9 +26,7 @@ const Overview = (props) => {
             <Card title={'Monthly Change'} color={'red'} value={'-1.2%'} />
             <Card title={'Third Value'} color={'teal'} value={'$123.53'} />
           </div>
-          <div class='w-full h-12'>
-            <TransactionList />
-          </div>
+          <TransactionList />
         </div>
       </div>
     </section>

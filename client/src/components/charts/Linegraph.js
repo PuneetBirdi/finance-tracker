@@ -1,14 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  AreaChart,
-  Area,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts';
+import { AreaChart, Area, Tooltip, ResponsiveContainer } from 'recharts';
 
 const Linegraph = (props) => {
   const data = [
@@ -62,17 +54,51 @@ const Linegraph = (props) => {
         <AreaChart
           data={data}
           margin={{
-            top: 10,
-            right: 20,
+            top: 0,
+            right: 5,
             left: 0,
             bottom: 0,
           }}
         >
-          <CartesianGrid strokeDasharray='3 3' />
-          <XAxis />
-          <YAxis />
+          <defs>
+            <linearGradient id='colorUv' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor='#B794F4' stopOpacity={0.95} />
+              <stop offset='95%' stopColor='#B794F4' stopOpacity={0.15} />
+            </linearGradient>
+            <linearGradient id='colorPv' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor='#F6E05E' stopOpacity={0.95} />
+              <stop offset='95%' stopColor='#F6E05E' stopOpacity={0.15} />
+            </linearGradient>
+            <linearGradient id='coloramt' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset='5%' stopColor='#4FD1C5' stopOpacity={0.95} />
+              <stop offset='95%' stopColor='#4FD1C5' stopOpacity={0.15} />
+            </linearGradient>
+          </defs>
           <Tooltip />
-          <Area type='monotone' dataKey='uv' stroke='#3182CE' fill='#4299E1' />
+          <Area
+            type='monotone'
+            dataKey='uv'
+            stroke='#B794F4'
+            fillOpacity={1}
+            fill='url(#colorUv)'
+            strokeWidth={3}
+          />
+          <Area
+            type='monotone'
+            dataKey='pv'
+            stroke='#F6E05E'
+            fillOpacity={1}
+            fill='url(#colorPv)'
+            strokeWidth={3}
+          />
+          <Area
+            type='monotone'
+            dataKey='amt'
+            stroke='#4FD1C5'
+            fillOpacity={1}
+            fill='url(#coloramt)'
+            strokeWidth={3}
+          />
         </AreaChart>
       </ResponsiveContainer>
     </div>
