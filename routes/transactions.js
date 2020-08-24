@@ -39,21 +39,26 @@ router.post(
 
       const transaction = await newTransaction.save();
       //update account balance and write a snapshot
-      const currentAccount = await Account.findByIdAndUpdate(
+      let currentAccount = await Account.findByIdAndUpdate(
         { _id: account },
         {
           $inc: { balance: transaction.amount },
+        },
+        { new: true }
+      );
+
+      currentAccount = await Account.findByIdAndUpdate(
+        { _id: account },
+        {
           $push: {
             snapshots: {
-              balance: this.balance,
+              balance: currentAccount.balance,
               date: Date.now(),
             },
           },
         },
         { new: true }
       );
-
-      console.log(currentAccount);
       res.json(transaction);
     } catch (err) {
       console.error(err.message);
