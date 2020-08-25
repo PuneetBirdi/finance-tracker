@@ -18,6 +18,17 @@ export default function(state = initialState, action) {
       return {
         ...state,
         transactions: [payload, ...state.transactions],
+        loading: false,
+      };
+    case GET_TRANSACTIONS:
+      return {
+        ...state,
+        transactions: payload,
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;

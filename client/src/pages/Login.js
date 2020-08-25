@@ -71,7 +71,7 @@ const Login = ({ login, isAuthenticated, loading, error, user }) => {
           ) : null}
           <div className='flex items-center justify-between'>
             <Link to='/register'>
-              <button className={styles.buttonLight} type='none'>
+              <button className={styles.buttonLight} type='button'>
                 Register
               </button>
             </Link>

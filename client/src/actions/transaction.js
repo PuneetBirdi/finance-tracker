@@ -10,6 +10,7 @@ import setAuthToken from '../utils/setAuthToken';
 
 //Write a new transaction
 export const newTransaction = (transaction) => async (dispatch) => {
+  dispatch(setLoading());
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -30,11 +31,12 @@ export const newTransaction = (transaction) => async (dispatch) => {
 };
 //Get all transactions by account
 export const getTransactions = (account) => async (dispatch) => {
+  dispatch(setLoading());
   try {
     const res = await axios.get('api/transactions');
     console.log(res);
     dispatch({
-      type: NEW_TRANSACTION,
+      type: GET_TRANSACTIONS,
       payload: res.data,
     });
   } catch (err) {

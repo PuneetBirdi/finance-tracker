@@ -4,10 +4,6 @@ const path = require('path');
 
 const app = express();
 
-// app.get('/', (req, res) => {
-//   res.json({ msg: 'Welcome to the ContactKeeper API.' });
-// });
-
 //Connect Database;
 connectDB();
 

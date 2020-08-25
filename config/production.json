@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://user:testPassword@finance-tracker.2qjm5.mongodb.net/finance-tracker?retryWrites=true&w=majority",
+  "jwtSecret": "secret"
+}
