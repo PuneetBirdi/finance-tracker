@@ -23,7 +23,6 @@
     "postcss-cli": "^6.0.1",
     "postcss-nested": "^4.1.1",
     "tailwindcss": "^1.0.1"
-
   },
   "scripts": {
     "build:css": "postcss tailwindcss/tailwind.src.css -o src/css/tailwind.css",
