@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Finance Tracking / Banking Application",
   "main": "server.js",
+  "engines": {
+    "node": "12.11.1"
+  },
   "dependencies": {
     "accounting": "^0.4.1",
     "bcryptjs": "^2.4.3",
