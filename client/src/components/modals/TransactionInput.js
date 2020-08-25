@@ -24,6 +24,8 @@ const TransactionInput = ({
   const handleType = (amount) => {
     if (transaction.type === 'withdrawal' || transaction.type === 'purchase') {
       return amount * -1;
+    } else {
+      return amount;
     }
   };
 

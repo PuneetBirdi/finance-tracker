@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from 'recharts';
+import { connect } from 'react-redux';
 
 const Linegraph = ({ accounts }) => {
   const data = [
@@ -52,7 +53,7 @@ const Linegraph = ({ accounts }) => {
     <div style={{ width: '100%', height: 450 }}>
       <ResponsiveContainer>
         <AreaChart
-          data={data}
+          data={accounts[2].snapshots}
           margin={{
             top: 0,
             right: 5,
@@ -75,14 +76,18 @@ const Linegraph = ({ accounts }) => {
             </linearGradient>
           </defs>
           <Tooltip />
-          <Area
-            type='monotone'
-            dataKey='uv'
-            stroke='#B794F4'
-            fillOpacity={1}
-            fill='url(#colorUv)'
-            strokeWidth={3}
-          />
+          {accounts.map((account) => {
+            return (
+              <Area
+                type='monotone'
+                dataKey='balance'
+                stroke='#B794F4'
+                fillOpacity={1}
+                fill='url(#colorUv)'
+                strokeWidth={3}
+              />
+            );
+          })}
           <Area
             type='monotone'
             dataKey='pv'
@@ -105,6 +110,13 @@ const Linegraph = ({ accounts }) => {
   );
 };
 
-Linegraph.propTypes = {};
+Linegraph.propTypes = {
+  accounts: PropTypes.array.isRequired,
+  getTransactions: PropTypes.func.isRequired,
+};
 
-export default Linegraph;
+const mapStateToProps = (state) => ({
+  accounts: state.portfolio.accounts,
+});
+
+export default connect(mapStateToProps)(Linegraph);
