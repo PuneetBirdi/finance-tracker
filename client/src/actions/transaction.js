@@ -10,7 +10,7 @@ import setAuthToken from '../utils/setAuthToken';
 
 //Write a new transaction
 export const newTransaction = (transaction) => async (dispatch) => {
-  dispatch(setLoading());
+  setAuthToken(localStorage.token);
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -18,6 +18,7 @@ export const newTransaction = (transaction) => async (dispatch) => {
   };
   try {
     const res = await axios.post('api/transactions', transaction, config);
+
     dispatch({
       type: NEW_TRANSACTION,
       payload: res.data,
@@ -25,16 +26,15 @@ export const newTransaction = (transaction) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: TRANSACTION_ERROR,
-      // payload: err.response.data.msg,
+      payload: err,
     });
   }
 };
+
 //Get all transactions by account
 export const getTransactions = (account) => async (dispatch) => {
-  dispatch(setLoading());
   try {
-    const res = await axios.get('api/transactions');
-    console.log(res);
+    const res = await axios.get(`api/transactions/${account}`);
     dispatch({
       type: GET_TRANSACTIONS,
       payload: res.data,
@@ -42,6 +42,7 @@ export const getTransactions = (account) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: TRANSACTION_ERROR,
+      payload: err,
     });
   }
 };

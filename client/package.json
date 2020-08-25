@@ -28,8 +28,8 @@
   "scripts": {
     "build:css": "postcss tailwindcss/tailwind.src.css -o src/css/tailwind.css",
     "watch:css": "postcss tailwindcss/tailwind.src.css -o src/css/tailwind.css -w",
-    "start": "yarn watch:css & react-scripts start",
-    "build": "yarn build:css && react-scripts build",
+    "start": "npm watch:css & react-scripts start",
+    "build": "npm build:css && react-scripts build",
     "test": "react-scripts test",
     "eslint": "eslint src",
     "eject": "react-scripts eject"

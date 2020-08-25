@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { newTransaction } from '../../actions/transaction';
 
-const TransactionInput = ({ closeModal, accounts, type, newTransaction }) => {
+const TransactionInput = ({
+  closeModal,
+  accounts,
+  type,
+  newTransaction,
+  loading,
+}) => {
   const [transaction, setTransaction] = useState({
     description: '',
     amount: '',
@@ -15,12 +21,28 @@ const TransactionInput = ({ closeModal, accounts, type, newTransaction }) => {
     setTransaction({ ...transaction, [e.target.name]: e.target.value });
   };
 
+  const handleType = (amount) => {
+    if (transaction.type === 'withdrawal' || transaction.type === 'purchase') {
+      return amount * -1;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    newTransaction(transaction);
+    //build transaction object
+    const fullTransaction = {
+      description: transaction.description,
+      amount: handleType(transaction.amount),
+      type: transaction.type,
+      account: transaction.account,
+    };
+    newTransaction(fullTransaction);
+    setTimeout(() => {
+      closeModal();
+    }, 250);
   };
   return (
-    <div className='fixed top-0 bg-opaque h-screen w-screen z-10 flex justify-center items-center'>
+    <div className='fixed top-0 bg-gray-800 bg-opacity-75 h-screen w-screen z-10 flex justify-center items-center'>
       <form
         className='bg-white shadow-xl rounded px-8 pt-6 pb-6 flex flex-col'
         onSubmit={handleSubmit}
@@ -139,18 +161,48 @@ const TransactionInput = ({ closeModal, accounts, type, newTransaction }) => {
           </div>
           <div className='flex items-center justify-between'>
             <button
-              className='bg-white hover:bg-red-300 border text-red-500 font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+              className='bg-white hover:bg-red-300 border text-red-500 font-semibold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline'
               type='button'
               onClick={closeModal}
             >
               Cancel
             </button>
-            <button
-              className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-              type='submit'
-            >
-              Submit
-            </button>
+            {loading ? (
+              <button
+                className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center'
+                type='none'
+                disabled
+              >
+                <svg
+                  class='animate-spin -ml-1 mr-3 h-5 w-5 text-white'
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                >
+                  <circle
+                    class='opacity-25'
+                    cx='12'
+                    cy='12'
+                    r='10'
+                    stroke='currentColor'
+                    stroke-width='4'
+                  ></circle>
+                  <path
+                    class='opacity-75'
+                    fill='currentColor'
+                    d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+                  ></path>
+                </svg>
+                Processing
+              </button>
+            ) : (
+              <button
+                className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+                type='submit'
+              >
+                Submit
+              </button>
+            )}
           </div>
         </div>
       </form>
@@ -161,10 +213,12 @@ const TransactionInput = ({ closeModal, accounts, type, newTransaction }) => {
 TransactionInput.propTypes = {
   accounts: PropTypes.array.isRequired,
   newTransaction: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   accounts: state.portfolio.accounts,
+  loading: state.transaction.loading,
 });
 
 export default connect(mapStateToProps, { newTransaction })(TransactionInput);

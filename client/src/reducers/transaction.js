@@ -6,9 +6,9 @@ import {
 } from '../actions/types.js';
 
 const initialState = {
-  transactions: null,
+  transactions: [],
   loading: false,
-  error: null,
+  error: [],
 };
 
 export default function(state = initialState, action) {
@@ -17,18 +17,25 @@ export default function(state = initialState, action) {
     case NEW_TRANSACTION:
       return {
         ...state,
-        transactions: [payload, ...state.transactions],
+        transactions: [...state.transactions, payload],
         loading: false,
       };
     case GET_TRANSACTIONS:
       return {
         ...state,
-        transactions: payload,
+        transactions: [...state.transactions, ...payload],
+        loading: false,
+      };
+    case TRANSACTION_ERROR:
+      return {
+        ...state,
+        error: payload,
+        loading: false,
       };
     case SET_LOADING:
       return {
         ...state,
-        loading: true,
+        loading: false,
       };
     default:
       return state;

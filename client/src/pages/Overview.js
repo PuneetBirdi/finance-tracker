@@ -48,7 +48,7 @@ const Overview = ({ portfolio }) => {
                 <Card
                   title={'Portfolio Value'}
                   color={'blue'}
-                  value={'$322,435.12'}
+                  value={formatMoney(portfolio.totalValue)}
                 />
                 <Card title={'Monthly Change'} color={'red'} value={'-1.2%'} />
                 <Card

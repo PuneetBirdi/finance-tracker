@@ -38,6 +38,7 @@ router.post(
       });
 
       const transaction = await newTransaction.save();
+      
       //update account balance and write a snapshot
       let currentAccount = await Account.findByIdAndUpdate(
         { _id: account },

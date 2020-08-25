@@ -39,6 +39,7 @@ const TransactionList = ({ accounts }) => {
 
 TransactionList.propTypes = {
   accounts: PropTypes.array.isRequired,
+  getTransactions: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
