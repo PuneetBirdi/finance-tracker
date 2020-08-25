@@ -7,6 +7,7 @@ import {
 } from './types';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
+import { loadPortfolio } from './portfolio';
 
 //Write a new transaction
 export const newTransaction = (transaction) => async (dispatch) => {
@@ -18,11 +19,11 @@ export const newTransaction = (transaction) => async (dispatch) => {
   };
   try {
     const res = await axios.post('api/transactions', transaction, config);
-
     dispatch({
       type: NEW_TRANSACTION,
       payload: res.data,
     });
+    dispatch(loadPortfolio());
   } catch (err) {
     dispatch({
       type: TRANSACTION_ERROR,
