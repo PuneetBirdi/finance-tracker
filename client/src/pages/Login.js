@@ -21,6 +21,10 @@ const Login = ({ login, isAuthenticated, loading, error, user }) => {
     login(credentials.email, credentials.password);
   };
 
+  const testAccount = (e) => {
+    setCredentials({ email: 'test@gmail.com', password: 'password' });
+  };
+
   //Redirect if logged in
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
@@ -32,6 +36,17 @@ const Login = ({ login, isAuthenticated, loading, error, user }) => {
       </h1>
       <div className='w-full max-w-xs'>
         <form className={styles.card} onSubmit={(e) => handleSubmit(e)}>
+          <div className='flex justify-end'>
+            <button
+              className={
+                'bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center'
+              }
+              type='button'
+              onClick={testAccount}
+            >
+              Test Account
+            </button>
+          </div>
           <div className='mb-4'>
             <label
               className='block text-gray-700 text-sm font-bold mb-2'
@@ -45,6 +60,7 @@ const Login = ({ login, isAuthenticated, loading, error, user }) => {
               type='email'
               name='email'
               placeholder='Email'
+              value={credentials.email}
               onChange={handleInput}
             />
           </div>
@@ -61,6 +77,7 @@ const Login = ({ login, isAuthenticated, loading, error, user }) => {
               type='password'
               name='password'
               placeholder='******************'
+              value={credentials.password}
               onChange={handleInput}
             />
           </div>
@@ -77,7 +94,7 @@ const Login = ({ login, isAuthenticated, loading, error, user }) => {
             </Link>
             {loading ? (
               <button
-                className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center'
+                className='bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center'
                 type='none'
                 disabled
               >
