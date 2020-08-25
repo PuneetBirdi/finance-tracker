@@ -18,7 +18,12 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "yarn": "^1.22.4"
+    "yarn": "^1.22.4",
+    "postcss": "^7.0.6",
+    "postcss-cli": "^6.0.1",
+    "postcss-nested": "^4.1.1",
+    "tailwindcss": "^1.0.1"
+
   },
   "scripts": {
     "build:css": "postcss tailwindcss/tailwind.src.css -o src/css/tailwind.css",
