@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import NewAccount from './pages/NewAccount';
 import Navbar from './components/layout/Navbar';
+import News from './pages/News';
 //IMPORT REDUX/STATE MANAGEMENT COMPONENTS
 import { Provider } from 'react-redux';
 import { loadUser } from './actions/auth';
@@ -37,6 +38,7 @@ const App = () => {
             <Route exact path='/register' component={Register} />
             <Route exact path='/newaccount' component={NewAccount} />
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
+            <PrivateRoute exact path='/news' component={News} />
           </Switch>
         </Router>
       </div>

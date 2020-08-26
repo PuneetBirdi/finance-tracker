@@ -27,5 +27,9 @@ export const TRANSACTION_ERROR = 'TRANSACTION_ERROR';
 export const GET_ACCOUNT = 'GET_ACCOUNT';
 export const ACCOUNT_ERROR = 'ACCOUNT_ERROR';
 export const CLEAR_ACCOUNT = 'CLEAR_ACCOUNT';
+//NEWS TYPES
+export const GET_NEWS = 'GET_NEWS';
+export const CLEAR_NEWS = 'CLEAR_NEWS';
+export const NEWS_ERROR = 'NEWS_ERROR';
 
 export const SET_LOADING = 'SET_LOADING';
