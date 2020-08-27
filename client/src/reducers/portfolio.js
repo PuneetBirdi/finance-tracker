@@ -19,6 +19,7 @@ export default function(state = initialState, action) {
         id: payload._id,
         email: payload.email,
         accounts: payload.accounts,
+        history: payload.history,
         loading: false,
         error: null,
       };

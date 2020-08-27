@@ -9,16 +9,22 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  snapshots: [
+    {
+      date: {
+        type: Date,
+        required: true,
+      },
+      balance: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
   created: {
     type: Date,
     default: Date.now,
   },
-  accounts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'accounts',
-    },
-  ],
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

@@ -24,7 +24,9 @@ const TransactionList = ({ accounts }) => {
                 <td className='border px-4 py-2 flex justify-center'>
                   <SmallChart color={'#B794F4'} snapshots={account.snapshots} />
                 </td>
-                <td className='border px-4 py-2 text-center'>{account.type}</td>
+                <td className='border px-4 py-2 text-center'>
+                  {account.type.toUpperCase()}
+                </td>
                 <td className='border px-4 py-2 text-right font-semibold'>
                   {formatMoney(account.balance)}
                 </td>

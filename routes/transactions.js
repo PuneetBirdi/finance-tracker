@@ -4,6 +4,11 @@ const { check, validationResult } = require('express-validator/check');
 const Transaction = require('../models/Transaction');
 const auth = require('../middleware/auth');
 const Account = require('../models/Account');
+const User = require('../models/User');
+
+const roundNumber = (number) => {
+  return Math.ceil(number * 100) / 100;
+};
 
 //@route    POST api/account/transaction
 //@desc     Add new transaction
@@ -25,7 +30,9 @@ router.post(
       return res.status(400).json({ Errors: errors.array() });
     }
 
-    const { account, amount, description, type } = req.body;
+    let { account, amount, description, type } = req.body;
+
+    description = description.toUpperCase();
 
     //build and save new transaction
     try {
@@ -38,12 +45,12 @@ router.post(
       });
 
       const transaction = await newTransaction.save();
-      
+
       //update account balance and write a snapshot
       let currentAccount = await Account.findByIdAndUpdate(
         { _id: account },
         {
-          $inc: { balance: transaction.amount },
+          $inc: { balance: roundNumber(transaction.amount) },
         },
         { new: true }
       );
@@ -60,7 +67,26 @@ router.post(
         },
         { new: true }
       );
-      console.log(transaction);
+
+      //update user portfolio balance and write snapshot
+      const balances = await Account.find({ user: req.user.id });
+      const portfolioSnapshot = balances.reduce((prev, curr) => {
+        return prev + curr.balance;
+      }, 0);
+
+      const updatedUser = await User.findByIdAndUpdate(
+        { _id: req.user.id },
+        {
+          $push: {
+            snapshots: {
+              balance: roundNumber(portfolioSnapshot),
+              date: Date.now(),
+            },
+          },
+        },
+        { new: true }
+      );
+
       res.json(transaction);
     } catch (err) {
       console.error(err.message);

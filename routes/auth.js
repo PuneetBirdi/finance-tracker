@@ -48,6 +48,7 @@ router.get('/portfolio', auth, async (req, res) => {
       totalValue: accounts.reduce((prev, curr) => {
         return prev + curr.balance;
       }, 0),
+      history: user.snapshots,
       created: user.created,
       accounts: accounts,
       profile: profile,

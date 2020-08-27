@@ -28,6 +28,7 @@ export default function(state = initialState, action) {
         user_id: payload._id,
         created: payload.created,
         email: payload.email,
+        portfolioHistory: payload.snapshots,
         error: null,
         isAuthenticated: true,
       };

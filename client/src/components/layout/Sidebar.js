@@ -23,7 +23,7 @@ const Sidebar = (props) => {
   return (
     <aside className='bg-gray-700 shadow-xl font-normal'>
       <ul className=' mt-4 w-full'>
-        <Link to='/'>
+        <Link to='/dashboard'>
           <li className='pl-4 pr-4 py-2 hover:bg-blue-600 flex items-center'>
             <FaHome style={{ marginRight: 8 }} />
             Overview

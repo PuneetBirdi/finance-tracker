@@ -3,57 +3,12 @@ import PropTypes from 'prop-types';
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from 'recharts';
 import { connect } from 'react-redux';
 
-const Linegraph = ({ accounts }) => {
-  const data = [
-    {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: 'Page G',
-      uv: 6490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
-
+const Linegraph = ({ data }) => {
   return (
     <div style={{ width: '100%', height: 450 }}>
       <ResponsiveContainer>
         <AreaChart
-          data={accounts[2].snapshots}
+          data={data}
           margin={{
             top: 0,
             right: 5,
@@ -62,43 +17,15 @@ const Linegraph = ({ accounts }) => {
           }}
         >
           <defs>
-            <linearGradient id='colorUv' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='5%' stopColor='#B794F4' stopOpacity={0.95} />
-              <stop offset='95%' stopColor='#B794F4' stopOpacity={0.15} />
-            </linearGradient>
-            <linearGradient id='colorPv' x1='0' y1='0' x2='0' y2='1'>
-              <stop offset='5%' stopColor='#F6E05E' stopOpacity={0.95} />
-              <stop offset='95%' stopColor='#F6E05E' stopOpacity={0.15} />
-            </linearGradient>
             <linearGradient id='coloramt' x1='0' y1='0' x2='0' y2='1'>
               <stop offset='5%' stopColor='#4FD1C5' stopOpacity={0.95} />
               <stop offset='95%' stopColor='#4FD1C5' stopOpacity={0.15} />
             </linearGradient>
           </defs>
           <Tooltip />
-          {accounts.map((account) => {
-            return (
-              <Area
-                type='monotone'
-                dataKey='balance'
-                stroke='#B794F4'
-                fillOpacity={1}
-                fill='url(#colorUv)'
-                strokeWidth={3}
-              />
-            );
-          })}
           <Area
             type='monotone'
-            dataKey='pv'
-            stroke='#F6E05E'
-            fillOpacity={1}
-            fill='url(#colorPv)'
-            strokeWidth={3}
-          />
-          <Area
-            type='monotone'
-            dataKey='amt'
+            dataKey='balance'
             stroke='#4FD1C5'
             fillOpacity={1}
             fill='url(#coloramt)'
@@ -111,12 +38,12 @@ const Linegraph = ({ accounts }) => {
 };
 
 Linegraph.propTypes = {
-  accounts: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
   getTransactions: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  accounts: state.portfolio.accounts,
+  data: state.portfolio.history,
 });
 
 export default connect(mapStateToProps)(Linegraph);

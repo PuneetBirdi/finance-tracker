@@ -11,7 +11,7 @@ const publicAPI = axios.create({
 export const getNews = () => async (dispatch) => {
   try {
     const res = await publicAPI.get(
-      'https://newsapi.org/v2/top-headlines?country=us&apiKey=83a24ad5547d4a6d97a6406fb2b9a55e'
+      'https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=83a24ad5547d4a6d97a6406fb2b9a55e'
     );
     console.log(res);
     dispatch({
