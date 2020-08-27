@@ -5,7 +5,6 @@ import {
   SET_LOADING,
   TRANSACTION_ERROR,
 } from './types';
-import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 import { loadPortfolio } from './portfolio';
 

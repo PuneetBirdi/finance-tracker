@@ -27,6 +27,8 @@ const NewsArticle = ({ article }) => {
   );
 };
 
-NewsArticle.propTypes = {};
+NewsArticle.propTypes = {
+  article: PropTypes.object.isRequired,
+};
 
 export default NewsArticle;

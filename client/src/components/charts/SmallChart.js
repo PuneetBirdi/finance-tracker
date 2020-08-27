@@ -20,6 +20,9 @@ const SmallChart = ({ color, snapshots }) => {
   );
 };
 
-SmallChart.propTypes = {};
+SmallChart.propTypes = {
+  color: PropTypes.string.isRequired,
+  snapshots: PropTypes.array.isRequired,
+};
 
 export default SmallChart;

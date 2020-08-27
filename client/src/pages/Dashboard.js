@@ -3,8 +3,6 @@ import { Switch, Route } from 'react-router-dom';
 import Overview from './Overview';
 //SUBPAGES============
 import Sidebar from '../components/layout/Sidebar';
-import TransactionInput from '../components/modals/TransactionInput';
-import NewAccountModal from '../components/modals/NewAccountModal';
 
 const Dashboard = (props) => {
   return (

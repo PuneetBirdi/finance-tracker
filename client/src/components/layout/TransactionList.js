@@ -17,9 +17,9 @@ const TransactionList = ({ accounts }) => {
           </tr>
         </thead>
         <tbody className='overflow-y-scroll'>
-          {accounts.map((account) => {
+          {accounts.map((account, key) => {
             return (
-              <tr>
+              <tr key={key}>
                 <td className='border px-4 py-2'>{account.name}</td>
                 <td className='border px-4 py-2 flex justify-center'>
                   <SmallChart color={'#B794F4'} snapshots={account.snapshots} />
@@ -41,7 +41,6 @@ const TransactionList = ({ accounts }) => {
 
 TransactionList.propTypes = {
   accounts: PropTypes.array.isRequired,
-  getTransactions: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

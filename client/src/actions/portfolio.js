@@ -26,6 +26,13 @@ export const loadPortfolio = () => async (dispatch) => {
   }
 };
 
+//Clear portfolio from state
+export const clearPortfolio = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_PORTFOLIO,
+  });
+};
+
 //Set state to loading
 export const setLoading = () => async (dispatch) => {
   dispatch({ type: SET_LOADING });
