@@ -85,7 +85,7 @@ const Sidebar = (props) => {
         <li className='pl-4 py-2 mt-4'>
           <p className='font-semibold'>Information</p>
           <ul className='pr-4'>
-            <Link>
+            <Link to='/news'>
               <li className='px-4 py-2 my-2 rounded-full flex items-center align-center hover:bg-gray-800'>
                 <FaNewspaper style={{ marginRight: 8 }} />
                 News
