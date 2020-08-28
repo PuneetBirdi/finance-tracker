@@ -8,7 +8,7 @@ const imgPlaceholder =
 const NewsArticle = ({ article }) => {
   return (
     <section className='flex mx-2 py-4 text-gray-900 border-b border-gray-400'>
-      <div className='w-1/3'>
+      <div className='w-1/4'>
         <a href={article.url}>
           <img
             src={article.urlToImage ? article.urlToImage : imgPlaceholder}
@@ -17,7 +17,7 @@ const NewsArticle = ({ article }) => {
           />
         </a>
       </div>
-      <div className='w-2/3 ml-6'>
+      <div className='w-3/4 ml-6'>
         <a href={article.url} className={styles.H2.concat('text-center')}>
           {article.title}
         </a>

@@ -14,7 +14,7 @@ const News = ({ getNews, articles }) => {
     <section className='container static flex-1 h-full max-h-full min-w-full flex'>
       <Sidebar />
       <section
-        className={styles.card.concat('w-full h-full flex flex-col m-6')}
+        className={styles.card.concat('w-full h-full flex flex-col flex-1 m-8')}
       >
         {articles.map((article) => {
           return <NewsArticle article={article} />;

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../actions/alert';
 import { register } from '../actions/auth';
 
-const Register = ({ loading, user, register, isAuthenticated }) => {
+const Register = ({ loading, error, user, register, isAuthenticated }) => {
   //COMPONENT LEVEL STATE
   const [credentials, setCredentials] = useState({});
   const [profile, setProfile] = useState({});
@@ -35,7 +35,7 @@ const Register = ({ loading, user, register, isAuthenticated }) => {
     ) {
       return true;
     } else {
-      return true;
+      return false;
     }
   };
 
@@ -91,6 +91,7 @@ const Register = ({ loading, user, register, isAuthenticated }) => {
                     type='text'
                     name='firstName'
                     placeholder='First'
+                    required
                     value={profile.firstName}
                     onChange={handleProfile}
                   />
@@ -102,6 +103,7 @@ const Register = ({ loading, user, register, isAuthenticated }) => {
                     type='text'
                     name='lastName'
                     placeholder='Last'
+                    required
                     value={profile.lastName}
                     onChange={handleProfile}
                   />
@@ -122,6 +124,7 @@ const Register = ({ loading, user, register, isAuthenticated }) => {
                 name='phone'
                 placeholder='123-456-7890'
                 pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
+                required
                 value={profile.phone}
                 onChange={handleProfile}
               />
@@ -138,6 +141,7 @@ const Register = ({ loading, user, register, isAuthenticated }) => {
                 id='dob'
                 type='date'
                 name='dob'
+                required
                 onChange={handleProfile}
               />
             </div>
@@ -153,6 +157,7 @@ const Register = ({ loading, user, register, isAuthenticated }) => {
                     type='text'
                     name='street'
                     placeholder='Street address'
+                    required
                     onChange={handleProfile}
                   />
                 </div>
@@ -163,6 +168,7 @@ const Register = ({ loading, user, register, isAuthenticated }) => {
                     type='text'
                     name='city'
                     placeholder='City'
+                    required
                     onChange={handleProfile}
                   />
                 </div>
@@ -173,6 +179,7 @@ const Register = ({ loading, user, register, isAuthenticated }) => {
                 type='text'
                 name='province'
                 placeholder='State/Province'
+                required
                 onChange={handleProfile}
               />
               <input
@@ -181,6 +188,7 @@ const Register = ({ loading, user, register, isAuthenticated }) => {
                 type='text'
                 name='country'
                 placeholder='Country'
+                required
                 onChange={handleProfile}
               />
               <input
@@ -190,6 +198,7 @@ const Register = ({ loading, user, register, isAuthenticated }) => {
                 name='zip'
                 placeholder='ZIP Code'
                 pattern='^([ABCEGHJKLMNPRSTVXY][0-9][A-Z][ ]*[0-9][A-Z][0-9])$'
+                required
                 onChange={handleProfile}
               />
             </fieldset>
@@ -254,8 +263,15 @@ const Register = ({ loading, user, register, isAuthenticated }) => {
 
         <div className='flex items-center justify-between'>
           <Link to='/login'>
-            <button className={styles.buttonLight}>Back</button>
+            <button className={styles.buttonLight} type='button'>
+              Back
+            </button>
           </Link>
+          {error ? (
+            <div className='w-full text-red-600 text-center mb-3'>
+              <p className='text-sm font-semibold'>{error}</p>
+            </div>
+          ) : null}
           {loading ? (
             <button
               className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center'
@@ -312,5 +328,6 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   loading: state.auth.loading,
   user: state.user,
+  error: state.auth.error,
 });
 export default connect(mapStateToProps, { setAlert, register })(Register);
