@@ -7,6 +7,7 @@ const TransactionInput = ({
   closeModal,
   accounts,
   type,
+  error,
   newTransaction,
   loading,
 }) => {
@@ -29,7 +30,7 @@ const TransactionInput = ({
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     //build transaction object
     const fullTransaction = {
@@ -38,10 +39,15 @@ const TransactionInput = ({
       type: transaction.type,
       account: transaction.account,
     };
-    newTransaction(fullTransaction);
-    setTimeout(() => {
-      closeModal();
-    }, 250);
+    await newTransaction(fullTransaction);
+
+    if (!error) {
+      setTimeout(() => {
+        closeModal();
+      }, 250);
+    } else {
+      return null;
+    }
   };
   return (
     <div className='fixed top-0 bg-gray-800 bg-opacity-75 h-screen w-screen z-10 flex justify-center items-center'>
@@ -169,9 +175,14 @@ const TransactionInput = ({
             >
               Cancel
             </button>
+            {error ? (
+              <div className='w-full text-red-600 text-center mb-3 mx-3'>
+                <p className='text-sm font-semibold'>{error}</p>
+              </div>
+            ) : null}
             {loading ? (
               <button
-                className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center'
+                className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center ml-3'
                 type='none'
                 disabled
               >
@@ -216,11 +227,13 @@ TransactionInput.propTypes = {
   accounts: PropTypes.array.isRequired,
   newTransaction: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  error: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   accounts: state.portfolio.accounts,
   loading: state.transaction.loading,
+  error: state.transaction.error,
 });
 
 export default connect(mapStateToProps, { newTransaction })(TransactionInput);

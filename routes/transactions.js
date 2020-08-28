@@ -46,27 +46,40 @@ router.post(
 
       const transaction = await newTransaction.save();
 
-      //update account balance and write a snapshot
-      let currentAccount = await Account.findByIdAndUpdate(
-        { _id: account },
-        {
-          $inc: { balance: roundNumber(transaction.amount) },
-        },
-        { new: true }
-      );
+      //get account information
+      let currentAccount = await Account.findById({ _id: account });
 
-      currentAccount = await Account.findByIdAndUpdate(
-        { _id: account },
-        {
-          $push: {
-            snapshots: {
-              balance: currentAccount.balance,
-              date: Date.now(),
+      //if it's a savings account and the transaction is greater than the balance, return a warning, otherwise write the transaction
+      if (
+        currentAccount.balance + amount < 0.0 &&
+        currentAccount.type === 'savings'
+      ) {
+        return res.status(400).json({
+          msg: 'Insufficient funds.',
+        });
+      } else {
+        //update account balance and write a snapshot
+        currentAccount = await Account.findByIdAndUpdate(
+          { _id: account },
+          {
+            $inc: { balance: roundNumber(transaction.amount) },
+          },
+          { new: true }
+        );
+
+        currentAccount = await Account.findByIdAndUpdate(
+          { _id: account },
+          {
+            $push: {
+              snapshots: {
+                balance: currentAccount.balance,
+                date: Date.now(),
+              },
             },
           },
-        },
-        { new: true }
-      );
+          { new: true }
+        );
+      }
 
       //update user portfolio balance and write snapshot
       const balances = await Account.find({ user: req.user.id });

@@ -8,7 +8,7 @@ import {
 const initialState = {
   transactions: [],
   loading: false,
-  error: [],
+  error: null,
 };
 
 export default function(state = initialState, action) {

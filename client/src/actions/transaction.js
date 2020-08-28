@@ -26,7 +26,7 @@ export const newTransaction = (transaction) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: TRANSACTION_ERROR,
-      payload: err,
+      payload: err.response.data.msg,
     });
   }
 };
