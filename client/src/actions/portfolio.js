@@ -4,6 +4,8 @@ import {
   PORTFOLIO_LOADED,
   SET_LOADING,
   CLEAR_PORTFOLIO,
+  ACCOUNT_ERROR,
+  CREATE_ACCOUNT,
 } from './types';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
@@ -22,6 +24,30 @@ export const loadPortfolio = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: PORTFOLIO_ERROR,
+      payload: err.response.data.msg,
+    });
+  }
+};
+
+//create a new account
+export const createAccount = (accountInfo) => async (dispatch) => {
+  dispatch(setLoading());
+  setAuthToken(localStorage.token);
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  try {
+    const res = await axios.post('/api/accounts', accountInfo, config);
+    dispatch({
+      type: CREATE_ACCOUNT,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: ACCOUNT_ERROR,
+      payload: err.response.data.msg,
     });
   }
 };

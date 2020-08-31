@@ -18,9 +18,13 @@ const TransactionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  to: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'account',
+  },
   type: {
     type: String,
-    enum: ['deposit', 'withdrawal', 'purchase', 'sale'],
+    enum: ['deposit', 'withdrawal', 'transfer'],
   },
 });
 

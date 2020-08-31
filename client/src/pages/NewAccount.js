@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { styles } from '../css/styles';
+import { connect } from 'react-redux';
+import { createAccount } from '../actions/portfolio';
+import PropTypes from 'prop-types';
 
-const NewAccount = ({ closeModal }) => {
+const NewAccount = ({ closeModal, createAccount, loading }) => {
   const [accountInfo, setAccountInfo] = useState({});
 
   const handleType = (e) => {
@@ -20,24 +23,34 @@ const NewAccount = ({ closeModal }) => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createAccount(accountInfo);
+  };
+
   return (
     <section className='container w-11/12 mx-auto flex flex-col flex-auto justify-center items-center'>
-      <div className={styles.card}>
+      <form className={styles.card} onSubmit={handleSubmit}>
         <h3 className='text-center text-3xl text-gray-700 mb-4 font-bold'>
           Set Up a New Account
         </h3>
         <fieldset className='flex flex-no-wrap justify-between'>
           <button
-            className='bg-transparent hover:bg-purple-500 text-gray-700 hover:text-white p-3 rounded shadow w-auto'
+            className={
+              accountInfo.type === 'chequing'
+                ? `bg-purple-500 text-white p-3 ml-3 rounded shadow`
+                : `bg-transparent hover:bg-purple-500 text-gray-700 hover:text-white p-3 ml-3 rounded shadow`
+            }
             name='type'
             value='chequing'
+            type='button'
             onClick={handleType}
           >
             <h2 className='text-center font-bold text-2xl my-2 pointer-events-none'>
               Chequing
             </h2>
             <div className='p-2 m-2 pointer-events-none'>
-              <ul className='list-disc text-left'>
+              <ul className='list-disc text-left pointer-events-none'>
                 <li>Unlimited transactions</li>
                 <li>Up to $500.00 overdraft</li>
                 <li>5% Monthly overdraft fee</li>
@@ -45,14 +58,21 @@ const NewAccount = ({ closeModal }) => {
             </div>
           </button>
           <button
-            className='bg-transparent hover:bg-green-500 text-gray-700 hover:text-white p-3 ml-3 rounded shadow'
+            className={
+              accountInfo.type === 'savings'
+                ? `bg-green-500 text-white p-3 ml-3 rounded shadow`
+                : `bg-transparent hover:bg-green-500 text-gray-700 hover:text-white p-3 ml-3 rounded shadow`
+            }
             name='type'
             value='savings'
+            type='button'
             onClick={handleType}
           >
-            <h2 className='font-bold text-2xl my-2'>Savings</h2>
-            <div className='p-2 m-2'>
-              <ul className='list-disc text-left'>
+            <h2 className='font-bold text-2xl my-2 pointer-events-none'>
+              Savings
+            </h2>
+            <div className='p-2 m-2 pointer-events-none'>
+              <ul className='list-disc text-left pointer-events-none'>
                 <li>Minimum balance of $5000.00</li>
                 <li>Up to 5 free withdrawals per month</li>
                 <li>Earn 1.5% monthly interest.</li>
@@ -60,14 +80,21 @@ const NewAccount = ({ closeModal }) => {
             </div>
           </button>
           <button
-            className='bg-transparent hover:bg-red-500 text-gray-700 hover:text-white p-3 ml-3 rounded shadow'
+            className={
+              accountInfo.type === 'investing'
+                ? `bg-red-500 text-white p-3 ml-3 rounded shadow`
+                : `bg-transparent hover:bg-red-500 text-gray-700 hover:text-white p-3 ml-3 rounded shadow`
+            }
             name='type'
             value='investing'
+            type='button'
             onClick={handleType}
           >
-            <h2 className='font-bold text-2xl my-2'>Investing</h2>
-            <div className='p-2 m-2'>
-              <ul className='list-disc text-left'>
+            <h2 className='font-bold text-2xl my-2 pointer-events-none'>
+              Investing
+            </h2>
+            <div className='p-2 m-2 pointer-events-none'>
+              <ul className='list-disc text-left pointer-events-none'>
                 <li>Minimum balance of $10,000.00</li>
                 <li>$10.00 monthly fee</li>
                 <li>1.0% fee for each trade</li>
@@ -98,8 +125,11 @@ const NewAccount = ({ closeModal }) => {
                 id='balance'
                 type='number'
                 name='balance'
+                step='.01'
                 placeholder='Starting Balance'
                 onChange={handleInfo}
+                max={100000}
+                min={0}
                 required
               />
             </div>
@@ -113,18 +143,61 @@ const NewAccount = ({ closeModal }) => {
           >
             Cancel
           </button>
-          <button
-            className={
-              formCheck() ? styles.buttonPrimary : styles.buttonDisabled
-            }
-            type='submit'
-          >
-            Continue
-          </button>
+          {loading ? (
+            <button
+              className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center ml-3'
+              type='none'
+              disabled
+            >
+              <svg
+                class='animate-spin -ml-1 mr-3 h-5 w-5 text-white'
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+              >
+                <circle
+                  class='opacity-25'
+                  cx='12'
+                  cy='12'
+                  r='10'
+                  stroke='currentColor'
+                  stroke-width='4'
+                ></circle>
+                <path
+                  class='opacity-75'
+                  fill='currentColor'
+                  d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+                ></path>
+              </svg>
+              Processing
+            </button>
+          ) : (
+            <button
+              className={
+                formCheck() ? styles.buttonPrimary : styles.buttonDisabled
+              }
+              type='submit'
+            >
+              Continue
+            </button>
+          )}
         </div>
-      </div>
+      </form>
     </section>
   );
 };
 
-export default NewAccount;
+NewAccount.propTypes = {
+  accounts: PropTypes.array.isRequired,
+  createAccount: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  accounts: state.portfolio.accounts,
+  loading: state.portfolio.loading,
+  error: state.portfolio.error,
+});
+
+export default connect(mapStateToProps, { createAccount })(NewAccount);

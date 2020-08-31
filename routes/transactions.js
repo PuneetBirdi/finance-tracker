@@ -109,7 +109,7 @@ router.post(
 );
 
 //@route    GET api/transactions
-//@desc     Add new transaction
+//@desc     Get all transactions from an account
 //@access   Private
 router.get('/:id', auth, async (req, res) => {
   try {

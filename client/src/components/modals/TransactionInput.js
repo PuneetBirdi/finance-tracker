@@ -91,6 +91,7 @@ const TransactionInput = ({
               type='number'
               step='.01'
               placeholder='00.00'
+              max={100000}
               onChange={handleInput}
             />
           </div>
