@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { newTransaction } from '../../actions/transaction';
+import { set } from 'mongoose';
 
 const TransactionInput = ({
   closeModal,
@@ -39,14 +40,11 @@ const TransactionInput = ({
       type: transaction.type,
       account: transaction.account,
     };
-    await newTransaction(fullTransaction);
-
-    if (!error) {
+    const response = await newTransaction(fullTransaction);
+    if (response) {
       setTimeout(() => {
         closeModal();
-      }, 250);
-    } else {
-      return null;
+      }, 500);
     }
   };
   return (
@@ -64,7 +62,7 @@ const TransactionInput = ({
           <div className='mb-4'>
             <label
               className='block text-gray-600 text-sm font-bold mb-2'
-              for='description'
+              htmlFor='description'
             >
               Description
             </label>
@@ -80,7 +78,7 @@ const TransactionInput = ({
           <div className='mb-2'>
             <label
               className='block text-gray-600 text-sm font-bold mb-2'
-              for='amount'
+              htmlFor='amount'
             >
               Amount
             </label>
@@ -100,7 +98,7 @@ const TransactionInput = ({
           <div className='w-full mb-6'>
             <label
               className='block text-gray-600 text-sm font-bold mb-2'
-              for='type'
+              htmlFor='type'
             >
               Type
             </label>
@@ -133,7 +131,7 @@ const TransactionInput = ({
           <div className='w-full mb-6'>
             <label
               className='block text-gray-600 text-sm font-bold mb-2'
-              for='account'
+              htmlFor='account'
             >
               Account
             </label>
@@ -228,7 +226,6 @@ TransactionInput.propTypes = {
   accounts: PropTypes.array.isRequired,
   newTransaction: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

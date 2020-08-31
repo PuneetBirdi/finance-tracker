@@ -36,28 +36,24 @@ router.post(
 
     //build and save new transaction
     try {
-      const newTransaction = new Transaction({
-        account,
-        amount,
-        description,
-        type,
-        user: req.user.id,
-      });
-
-      const transaction = await newTransaction.save();
-
       //get account information
       let currentAccount = await Account.findById({ _id: account });
 
       //if it's a savings account and the transaction is greater than the balance, return a warning, otherwise write the transaction
-      if (
-        currentAccount.balance + amount < 0.0 &&
-        currentAccount.type === 'savings'
-      ) {
+      if (currentAccount.balance + amount < 0.0) {
         return res.status(400).json({
           msg: 'Insufficient funds.',
         });
       } else {
+        const newTransaction = new Transaction({
+          account,
+          amount,
+          description,
+          type,
+          user: req.user.id,
+        });
+
+        const transaction = await newTransaction.save();
         //update account balance and write a snapshot
         currentAccount = await Account.findByIdAndUpdate(
           { _id: account },
@@ -79,28 +75,27 @@ router.post(
           },
           { new: true }
         );
-      }
+        //update user portfolio balance and write snapshot
+        const balances = await Account.find({ user: req.user.id });
+        const portfolioSnapshot = balances.reduce((prev, curr) => {
+          return prev + curr.balance;
+        }, 0);
 
-      //update user portfolio balance and write snapshot
-      const balances = await Account.find({ user: req.user.id });
-      const portfolioSnapshot = balances.reduce((prev, curr) => {
-        return prev + curr.balance;
-      }, 0);
-
-      const updatedUser = await User.findByIdAndUpdate(
-        { _id: req.user.id },
-        {
-          $push: {
-            snapshots: {
-              balance: roundNumber(portfolioSnapshot),
-              date: Date.now(),
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: req.user.id },
+          {
+            $push: {
+              snapshots: {
+                balance: roundNumber(portfolioSnapshot),
+                date: Date.now(),
+              },
             },
           },
-        },
-        { new: true }
-      );
+          { new: true }
+        );
 
-      res.json(transaction);
+        res.json(transaction);
+      }
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');

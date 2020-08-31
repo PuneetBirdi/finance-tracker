@@ -7,6 +7,7 @@ import {
   ACCOUNT_ERROR,
   CREATE_ACCOUNT,
 } from './types';
+import { newTransaction } from './transaction';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -32,6 +33,12 @@ export const loadPortfolio = () => async (dispatch) => {
 //create a new account
 export const createAccount = (accountInfo) => async (dispatch) => {
   dispatch(setLoading());
+  console.log(accountInfo);
+  const newAccount = {
+    type: accountInfo.type,
+    name: accountInfo.name,
+    balance: 0.0,
+  };
   setAuthToken(localStorage.token);
   const config = {
     headers: {
@@ -39,11 +46,22 @@ export const createAccount = (accountInfo) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.post('/api/accounts', accountInfo, config);
+    const res = await axios.post('/api/accounts', newAccount, config);
     dispatch({
       type: CREATE_ACCOUNT,
       payload: res.data,
     });
+
+    const initial = {
+      account: res.data._id,
+      type: 'deposit',
+      amount: accountInfo.balance,
+      description: 'initial balance',
+    };
+    console.log(res);
+    console.log(initial);
+
+    dispatch(newTransaction(initial));
   } catch (err) {
     dispatch({
       type: ACCOUNT_ERROR,

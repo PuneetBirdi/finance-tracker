@@ -34,3 +34,4 @@ export const CLEAR_NEWS = 'CLEAR_NEWS';
 export const NEWS_ERROR = 'NEWS_ERROR';
 
 export const SET_LOADING = 'SET_LOADING';
+export const CLEAR_ERROR = 'CLEAR_ERROR';

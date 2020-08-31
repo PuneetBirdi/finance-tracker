@@ -3,6 +3,7 @@ import {
   NEW_TRANSACTION,
   SET_LOADING,
   TRANSACTION_ERROR,
+  CLEAR_ERROR,
 } from '../actions/types.js';
 
 const initialState = {
@@ -19,6 +20,7 @@ export default function(state = initialState, action) {
         ...state,
         transactions: [...state.transactions, payload],
         loading: false,
+        error: null,
       };
     case GET_TRANSACTIONS:
       return {
@@ -31,6 +33,11 @@ export default function(state = initialState, action) {
         ...state,
         error: payload,
         loading: false,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
       };
     case SET_LOADING:
       return {

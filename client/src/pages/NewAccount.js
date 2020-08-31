@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createAccount } from '../actions/portfolio';
 import PropTypes from 'prop-types';
 
-const NewAccount = ({ closeModal, createAccount, loading }) => {
+const NewAccount = ({ closeModal, createAccount, loading, error }) => {
   const [accountInfo, setAccountInfo] = useState({});
 
   const handleType = (e) => {
@@ -23,9 +23,17 @@ const NewAccount = ({ closeModal, createAccount, loading }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    createAccount(accountInfo);
+    await createAccount(accountInfo);
+
+    if (error !== null) {
+      setTimeout(() => {
+        closeModal();
+      }, 250);
+    } else {
+      return null;
+    }
   };
 
   return (

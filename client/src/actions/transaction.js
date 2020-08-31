@@ -4,6 +4,7 @@ import {
   NEW_TRANSACTION,
   SET_LOADING,
   TRANSACTION_ERROR,
+  CLEAR_ERROR,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 import { loadPortfolio } from './portfolio';
@@ -23,11 +24,16 @@ export const newTransaction = (transaction) => async (dispatch) => {
       payload: res.data,
     });
     dispatch(loadPortfolio());
+    return true;
   } catch (err) {
     dispatch({
       type: TRANSACTION_ERROR,
       payload: err.response.data.msg,
     });
+    setTimeout(() => {
+      clearError();
+    }, 3000);
+    return false;
   }
 };
 
@@ -44,7 +50,14 @@ export const getTransactions = (account) => async (dispatch) => {
       type: TRANSACTION_ERROR,
       payload: err,
     });
+    setTimeout(() => {
+      clearError();
+    }, 3000);
   }
+};
+
+export const clearError = () => async (dispatch) => {
+  dispatch({ type: CLEAR_ERROR });
 };
 
 //Set state to loading
