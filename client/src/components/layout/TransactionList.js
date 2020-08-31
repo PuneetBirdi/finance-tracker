@@ -20,7 +20,9 @@ const TransactionList = ({ accounts }) => {
           {accounts.map((account, key) => {
             return (
               <tr key={key}>
-                <td className='border px-4 py-2'>{account.name}</td>
+                <td className='border px-4 py-2'>
+                  {account.name.toUpperCase()}
+                </td>
                 <td className='border px-4 py-2 flex justify-center'>
                   <SmallChart color={'#B794F4'} snapshots={account.snapshots} />
                 </td>

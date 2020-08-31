@@ -150,7 +150,9 @@ const TransactionInput = ({
                 {accounts.map((account) => {
                   return (
                     <option value={account._id} key={account._id}>
-                      {account.name}
+                      {account.name.toUpperCase() +
+                        ' ---- ' +
+                        account.type.toUpperCase()}
                     </option>
                   );
                 })}

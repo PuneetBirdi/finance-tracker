@@ -27,18 +27,25 @@ router.post(
       return res.status(400).json({ Errors: errors.array() });
     }
 
-    const { name, type, balance } = req.body;
+    let { name, type, balance } = req.body;
 
     try {
-      const newAccount = new Account({
-        balance,
-        name,
-        type,
-        user: req.user.id,
-      });
+      const existingAccounts = await Account.find({ user: req.user.id });
+      if (existingAccounts.length >= 4) {
+        return res.status(400).json({
+          msg: 'You are currently limited to a maximum of 4 accounts.',
+        });
+      } else {
+        const newAccount = new Account({
+          balance,
+          name,
+          type,
+          user: req.user.id,
+        });
 
-      const account = await newAccount.save();
-      res.json(account);
+        const account = await newAccount.save();
+        res.json(account);
+      }
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');

@@ -5,6 +5,7 @@ import {
   CLEAR_PORTFOLIO,
   CREATE_ACCOUNT,
   ACCOUNT_ERROR,
+  CLEAR_ERROR,
 } from '../actions/types';
 
 const initialState = {
@@ -33,10 +34,20 @@ export default function(state = initialState, action) {
       };
     case PORTFOLIO_ERROR:
     case CLEAR_PORTFOLIO:
-    case ACCOUNT_ERROR:
       localStorage.removeItem('token');
       return {
         user: null,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+    case ACCOUNT_ERROR:
+      return {
+        ...state,
+        error: payload,
+        loading: false,
       };
     case SET_LOADING:
       return {

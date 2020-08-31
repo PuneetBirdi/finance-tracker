@@ -6,6 +6,7 @@ import {
   CLEAR_PORTFOLIO,
   ACCOUNT_ERROR,
   CREATE_ACCOUNT,
+  CLEAR_ERROR,
 } from './types';
 import { newTransaction } from './transaction';
 import { setAlert } from './alert';
@@ -58,15 +59,18 @@ export const createAccount = (accountInfo) => async (dispatch) => {
       amount: accountInfo.balance,
       description: 'initial balance',
     };
-    console.log(res);
-    console.log(initial);
-
     dispatch(newTransaction(initial));
+    return true;
   } catch (err) {
     dispatch({
       type: ACCOUNT_ERROR,
       payload: err.response.data.msg,
     });
+
+    setTimeout(() => {
+      dispatch({ type: CLEAR_ERROR });
+    }, 3000);
+    return false;
   }
 };
 

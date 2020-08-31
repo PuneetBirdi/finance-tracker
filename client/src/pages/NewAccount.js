@@ -25,14 +25,11 @@ const NewAccount = ({ closeModal, createAccount, loading, error }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createAccount(accountInfo);
-
-    if (error !== null) {
+    const response = await createAccount(accountInfo);
+    if (response) {
       setTimeout(() => {
         closeModal();
-      }, 250);
-    } else {
-      return null;
+      }, 500);
     }
   };
 
@@ -151,6 +148,11 @@ const NewAccount = ({ closeModal, createAccount, loading, error }) => {
           >
             Cancel
           </button>
+          {error ? (
+            <div className='w-full text-red-600 text-center mb-3 mx-3'>
+              <p className='text-sm font-semibold'>{error}</p>
+            </div>
+          ) : null}
           {loading ? (
             <button
               className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center ml-3'

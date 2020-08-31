@@ -31,7 +31,7 @@ export const newTransaction = (transaction) => async (dispatch) => {
       payload: err.response.data.msg,
     });
     setTimeout(() => {
-      clearError();
+      dispatch({ type: CLEAR_ERROR });
     }, 3000);
     return false;
   }
@@ -51,13 +51,9 @@ export const getTransactions = (account) => async (dispatch) => {
       payload: err,
     });
     setTimeout(() => {
-      clearError();
+      dispatch({ type: CLEAR_ERROR });
     }, 3000);
   }
-};
-
-export const clearError = () => async (dispatch) => {
-  dispatch({ type: CLEAR_ERROR });
 };
 
 //Set state to loading
