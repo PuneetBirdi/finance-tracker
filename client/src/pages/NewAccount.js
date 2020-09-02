@@ -5,8 +5,16 @@ import { createAccount } from '../actions/portfolio';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const NewAccount = ({ closeModal, createAccount, loading, error, history }) => {
+const NewAccount = ({
+  modalStatus,
+  closeModal,
+  createAccount,
+  portfolioLoading,
+  error,
+  history,
+}) => {
   const [accountInfo, setAccountInfo] = useState({});
+  const [modal, setModal] = useState(modalStatus || false);
 
   const handleType = (e) => {
     setAccountInfo({ ...accountInfo, [e.target.name]: e.target.value });
@@ -27,8 +35,10 @@ const NewAccount = ({ closeModal, createAccount, loading, error, history }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await createAccount(accountInfo);
-    if (response) {
+    if (response && !modal) {
       history.push('/dashboard');
+    } else if (response && modal) {
+      closeModal();
     }
   };
 
@@ -147,7 +157,7 @@ const NewAccount = ({ closeModal, createAccount, loading, error, history }) => {
           >
             Cancel
           </button>
-          {loading ? (
+          {portfolioLoading ? (
             <button
               className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center ml-3'
               type='none'
@@ -203,13 +213,15 @@ const NewAccount = ({ closeModal, createAccount, loading, error, history }) => {
 NewAccount.propTypes = {
   accounts: PropTypes.array.isRequired,
   createAccount: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  authLoading: PropTypes.bool.isRequired,
+  portfolioLoading: PropTypes.bool.isRequired,
   error: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   accounts: state.portfolio.accounts,
-  loading: state.portfolio.loading,
+  authLoading: state.auth.loading,
+  portfolioLoading: state.portfolio.loading,
   error: state.portfolio.error,
 });
 

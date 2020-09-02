@@ -47,7 +47,6 @@ export default function(state = initialState, action) {
         created: null,
         user: null,
         isAuthenticated: false,
-        loading: false,
       };
     case USER_LOADED:
       return {

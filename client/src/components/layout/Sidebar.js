@@ -135,7 +135,10 @@ const Sidebar = ({ accounts, loading }) => {
         />
       ) : null}
       {accountModal ? (
-        <NewAccountModal closeModal={() => setAccountModal(!accountModal)} />
+        <NewAccountModal
+          closeModal={() => setAccountModal(!accountModal)}
+          modalStatus={accountModal}
+        />
       ) : null}
     </aside>
   );
