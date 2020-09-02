@@ -31,6 +31,7 @@ export default function(state = initialState, action) {
         portfolioHistory: payload.snapshots,
         error: null,
         isAuthenticated: true,
+        loading: false,
       };
     case REGISTER_FAIL:
     case AUTH_ERROR:

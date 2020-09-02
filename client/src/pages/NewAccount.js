@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { styles } from '../css/styles';
 import { connect } from 'react-redux';
 import { createAccount } from '../actions/portfolio';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const NewAccount = ({ closeModal, createAccount, loading, error }) => {
+const NewAccount = ({ closeModal, createAccount, loading, error, history }) => {
   const [accountInfo, setAccountInfo] = useState({});
 
   const handleType = (e) => {
@@ -27,9 +28,7 @@ const NewAccount = ({ closeModal, createAccount, loading, error }) => {
     e.preventDefault();
     const response = await createAccount(accountInfo);
     if (response) {
-      setTimeout(() => {
-        closeModal();
-      }, 500);
+      history.push('/dashboard');
     }
   };
 
@@ -148,11 +147,6 @@ const NewAccount = ({ closeModal, createAccount, loading, error }) => {
           >
             Cancel
           </button>
-          {error ? (
-            <div className='w-full text-red-600 text-center mb-3 mx-3'>
-              <p className='text-sm font-semibold'>{error}</p>
-            </div>
-          ) : null}
           {loading ? (
             <button
               className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center ml-3'
@@ -192,6 +186,15 @@ const NewAccount = ({ closeModal, createAccount, loading, error }) => {
             </button>
           )}
         </div>
+        {error ? (
+          <div className='w-full text-red-600 text-center mt-3'>
+            <p className='text-sm font-semibold'>{error}</p>
+          </div>
+        ) : (
+          <div className='w-full text-white text-center mt-3'>
+            <span>.</span>
+          </div>
+        )}
       </form>
     </section>
   );

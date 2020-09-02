@@ -44,13 +44,16 @@ const TransactionInput = ({
     if (response) {
       setTimeout(() => {
         closeModal();
-      }, 500);
+      }, 750);
+      return true;
+    } else {
+      return false;
     }
   };
   return (
     <div className='fixed top-0 bg-gray-800 bg-opacity-75 h-screen w-screen z-10 flex justify-center items-center'>
       <form
-        className='bg-white shadow-xl rounded px-8 pt-6 pb-6 flex flex-col'
+        className={`bg-white shadow-xl rounded px-8 pt-6 pb-6 flex flex-col`}
         onSubmit={handleSubmit}
       >
         <div className='self-start w-full mb-6'>
@@ -176,11 +179,6 @@ const TransactionInput = ({
             >
               Cancel
             </button>
-            {error ? (
-              <div className='w-full text-red-600 text-center mb-3 mx-3'>
-                <p className='text-sm font-semibold'>{error}</p>
-              </div>
-            ) : null}
             {loading ? (
               <button
                 className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center ml-3'
@@ -218,6 +216,15 @@ const TransactionInput = ({
               </button>
             )}
           </div>
+          {error ? (
+            <div className='w-full text-red-600 text-center mt-3'>
+              <p className='text-sm font-semibold'>{error}</p>
+            </div>
+          ) : (
+            <div className='w-full text-white text-center mt-3'>
+              <span>.</span>
+            </div>
+          )}
         </div>
       </form>
     </div>

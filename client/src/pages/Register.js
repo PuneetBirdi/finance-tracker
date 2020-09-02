@@ -258,6 +258,11 @@ const Register = ({ loading, error, user, register, isAuthenticated }) => {
                 onChange={handleCredentials}
               />
             </div>
+            {credentials.password === credentials.password2 ? null : (
+              <div className='w-full text-red-600 text-center mb-3'>
+                <p className='text-sm font-semibold'>Passwords do not match.</p>
+              </div>
+            )}
           </div>
         </div>
 
