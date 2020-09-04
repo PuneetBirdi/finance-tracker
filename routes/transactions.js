@@ -108,9 +108,8 @@ router.post(
 //@access   Private
 router.get('/:id', auth, async (req, res) => {
   try {
-    const accounts = await Transaction.find({ account: req.params.id });
-
-    res.json(accounts);
+    const transactions = await Transaction.find({ account: req.params.id });
+    res.json(transactions);
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ msg: 'Server error' });

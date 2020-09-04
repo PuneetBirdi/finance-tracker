@@ -96,7 +96,7 @@ const Sidebar = ({ accounts, loading }) => {
             ) : (
               accounts.map((account) => {
                 return (
-                  <Link>
+                  <Link to={`/dashboard/account/${account._id}`}>
                     <li className='px-4 py-2 my-2 rounded-full flex items-center align-center hover:bg-gray-800'>
                       {returnIcon(account.type)}
                       {account.name.toUpperCase()}

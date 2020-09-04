@@ -48,7 +48,7 @@ const NewAccount = ({
         <h3 className='text-center text-3xl text-gray-700 mb-4 font-bold'>
           Set Up a New Account
         </h3>
-        <fieldset className='flex flex-no-wrap justify-between'>
+        <div className='flex flex-no-wrap justify-between'>
           <button
             className={
               accountInfo.type === 'chequing'
@@ -116,7 +116,7 @@ const NewAccount = ({
               </ul>
             </div>
           </button>
-        </fieldset>
+        </div>
         <fieldset className='flex-col justify-center p-3 mt-4'>
           <h3 className='text-center block text-gray-700 text-xl font-bold mb-2'>
             Account Info
@@ -140,7 +140,7 @@ const NewAccount = ({
                 type='number'
                 name='balance'
                 step='.01'
-                placeholder='Starting Balance'
+                placeholder='Balance '
                 onChange={handleInfo}
                 max={100000}
                 min={0}
@@ -152,7 +152,7 @@ const NewAccount = ({
         <div className='flex items-center justify-between'>
           <button
             className='bg-white hover:bg-red-300 border text-red-500 font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-            type='none'
+            type='button'
             onClick={closeModal}
           >
             Cancel
@@ -160,7 +160,7 @@ const NewAccount = ({
           {portfolioLoading ? (
             <button
               className='bg-purple-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex flex-no-wrap items-center ml-3'
-              type='none'
+              type='button'
               disabled
             >
               <svg

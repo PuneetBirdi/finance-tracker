@@ -39,20 +39,22 @@ export const newTransaction = (transaction) => async (dispatch) => {
 
 //Get all transactions by account
 export const getTransactions = (account) => async (dispatch) => {
+  setAuthToken(localStorage.token);
+  console.log(account);
+  setLoading();
   try {
     const res = await axios.get(`api/transactions/${account}`);
+    console.log(res);
     dispatch({
       type: GET_TRANSACTIONS,
       payload: res.data,
     });
   } catch (err) {
+    console.log(err);
     dispatch({
       type: TRANSACTION_ERROR,
       payload: err,
     });
-    setTimeout(() => {
-      dispatch({ type: CLEAR_ERROR });
-    }, 3000);
   }
 };
 

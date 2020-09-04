@@ -10,7 +10,7 @@ export const styles = {
   textInput:
     'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline my-1',
   //CUSTOM COMPONENTS====================
-  card: 'bg-white shadow-xl rounded px-8 pt-6 pb-8 mb-4',
+  card: 'bg-white shadow-xl rounded px-8 pt-6 pb-6 mb-4',
   //TYPOGRAPHY===========================
   H3: 'text-left text-gray-700 font-bold text-xl my-2',
   H2: 'text-left text-gray-700 font-bold text-2xl my-2',

@@ -33,8 +33,6 @@ export const loadPortfolio = () => async (dispatch) => {
 
 //create a new account
 export const createAccount = (accountInfo) => async (dispatch) => {
-  dispatch(setLoading());
-  console.log(accountInfo);
   const newAccount = {
     type: accountInfo.type,
     name: accountInfo.name,
