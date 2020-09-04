@@ -43,7 +43,7 @@ Linegraph.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  data: state.portfolio.history,
+  data: state.portfolio.details.monthlyHistory,
 });
 
 export default connect(mapStateToProps)(Linegraph);

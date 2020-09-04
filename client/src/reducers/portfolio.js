@@ -18,11 +18,9 @@ export default function(state = initialState, action) {
     case PORTFOLIO_LOADED:
       return {
         ...state,
-        totalValue: payload.totalValue,
-        id: payload._id,
+        details: payload,
         email: payload.email,
         accounts: payload.accounts,
-        history: payload.history,
         loading: false,
         error: null,
       };
