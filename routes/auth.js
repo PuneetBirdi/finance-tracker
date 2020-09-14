@@ -3,11 +3,17 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator/check');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
+const _ = require('lodash');
 const config = require('config');
 const User = require('../models/User');
 const auth = require('../middleware/auth');
 const Account = require('../models/Account');
 const Profile = require('../models/Profile');
+
+const roundNumber = (number) => {
+  return Math.ceil(number * 100) / 100;
+};
 
 //@route    GET api/auth
 //@desc     Get logged in user
@@ -39,6 +45,30 @@ router.get('/portfolio', auth, async (req, res) => {
       '-user',
     ]);
     const profile = await Profile.find({ user: req.user.id });
+
+    const weekly = moment().startOf('day').subtract(1, 'week');
+    const monthly = moment().startOf('day').subtract(1, 'month');
+    const endOfRange = moment().endOf('day');
+
+    const monthlyHistory = _.filter(user.snapshots, function (each) {
+      return moment(each.date).isBetween(monthly, endOfRange);
+    });
+
+    const weeklyHistory = _.filter(user.snapshots, function (each) {
+      return moment(each.date).isBetween(weekly, endOfRange);
+    });
+
+    const calcChange = (array) => {
+      if (array.length === 0) {
+        return 0;
+      }
+      const start = array[0].balance;
+      const end = array[array.length - 1].balance;
+
+      const change = (end - start) / start;
+      const percentageChange = change * 100;
+      return roundNumber(percentageChange);
+    };
     const result = {
       user: {
         _id: user._id,
@@ -49,6 +79,10 @@ router.get('/portfolio', auth, async (req, res) => {
         return prev + curr.balance;
       }, 0),
       history: user.snapshots,
+      monthlyHistory,
+      weeklyHistory,
+      monthlyChange: calcChange(monthlyHistory),
+      weeklyChange: calcChange(weeklyHistory),
       created: user.created,
       accounts: accounts,
       profile: profile,

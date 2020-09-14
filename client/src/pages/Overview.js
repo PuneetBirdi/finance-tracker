@@ -3,15 +3,11 @@ import PropTypes from 'prop-types';
 import { styles } from '../css/styles';
 import { connect } from 'react-redux';
 import { formatMoney } from 'accounting';
-import numeral from 'numeral';
 import Linegraph from '../components/charts/Linegraph';
 import TransactionList from '../components/layout/TransactionList';
 import Card from '../components/layout/Card';
 
 const Overview = ({ portfolio }) => {
-  const roundNumber = (number) => {
-    return Math.ceil(number * 100) / 100;
-  };
   return (
     <section className='m-8 flex-1 w-screen'>
       <div className={styles.card.concat('w-full h-full flex flex-col')}>
@@ -57,7 +53,7 @@ const Overview = ({ portfolio }) => {
                 <Card
                   title={'Monthly Change'}
                   color={'red'}
-                  value={roundNumber(portfolio.details.monthlyChange) + '%'}
+                  value={portfolio.details.monthlyChange + '%'}
                 />
                 <Card
                   title={'Transactions'}

@@ -35,6 +35,7 @@ export default function(state = initialState, action) {
       localStorage.removeItem('token');
       return {
         user: null,
+        error: payload,
       };
     case CLEAR_ERROR:
       return {
