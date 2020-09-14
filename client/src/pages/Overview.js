@@ -52,7 +52,7 @@ const Overview = ({ portfolio }) => {
                 />
                 <Card
                   title={'Monthly Change'}
-                  color={'red'}
+                  color={portfolio.details.monthlyChange > 0 ? 'green' : 'red'}
                   value={portfolio.details.monthlyChange + '%'}
                 />
                 <Card
