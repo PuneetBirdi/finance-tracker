@@ -9,6 +9,7 @@ import {
   LOGOUT,
   SET_LOADING,
   CLEAR_PROFILE,
+  CLEAR_PORTFOLIO,
 } from './types';
 import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
@@ -35,7 +36,7 @@ export const loadUser = () => async (dispatch) => {
 
 //Register User
 export const register = (formData) => async (dispatch) => {
-  dispatch(setLoading());
+  setLoading();
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -60,7 +61,7 @@ export const register = (formData) => async (dispatch) => {
 
 //Login a User
 export const login = (email, password) => async (dispatch) => {
-  dispatch(setLoading());
+  setLoading();
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -88,6 +89,7 @@ export const login = (email, password) => async (dispatch) => {
 
 //Logout user
 export const logout = () => async (dispatch) => {
+  dispatch({ type: CLEAR_PORTFOLIO });
   dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
 };

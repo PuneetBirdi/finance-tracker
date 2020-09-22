@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { styles } from '../css/styles';
-import { connect } from 'react-redux';
 import { formatMoney } from 'accounting';
 import Linegraph from '../components/charts/Linegraph';
 import TransactionList from '../components/layout/TransactionList';
@@ -76,8 +75,4 @@ Overview.propTypes = {
   portfolio: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  portfolio: state.portfolio,
-});
-
-export default connect(mapStateToProps)(Overview);
+export default Overview;

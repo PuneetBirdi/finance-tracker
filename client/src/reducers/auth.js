@@ -7,6 +7,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   SET_LOADING,
+  CLEAR_PROFILE,
 } from '../actions/types';
 
 const initialState = {
@@ -35,6 +36,7 @@ export default function(state = initialState, action) {
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:
+    case CLEAR_PROFILE:
     case LOGOUT:
       localStorage.removeItem('token');
       return {
@@ -44,7 +46,7 @@ export default function(state = initialState, action) {
         email: null,
         portfolioHistory: null,
         created: null,
-        user: null,
+        user_id: null,
         isAuthenticated: false,
         loading: false,
       };

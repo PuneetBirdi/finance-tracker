@@ -35,9 +35,7 @@ const NewAccount = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await createAccount(accountInfo);
-    if (response && !modal) {
-      history.push('/dashboard');
-    } else if (response && modal) {
+    if (response && modal) {
       closeModal();
     }
   };
@@ -153,7 +151,7 @@ const NewAccount = ({
           <button
             className='bg-white hover:bg-red-300 border text-red-500 font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
             type='button'
-            onClick={closeModal}
+            onClick={modal ? closeModal : <Redirect to='/login' />}
           >
             Cancel
           </button>

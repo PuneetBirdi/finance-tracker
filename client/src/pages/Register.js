@@ -66,7 +66,7 @@ const Register = ({ loading, error, user, register, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to='/newaccount' />;
+    return <Redirect to='/dashboard' />;
   }
   return (
     <section className='container w-11/12 mx-auto flex flex-col flex-auto justify-center items-center'>

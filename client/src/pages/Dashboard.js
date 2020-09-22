@@ -1,18 +1,40 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import Overview from './Overview';
+import React, { Fragment } from 'react';
+import { Switch, Route, Router } from 'react-router-dom';
+import NewAccount from '../pages/NewAccount';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 //SUBPAGES============
+import Overview from './Overview';
 import Sidebar from '../components/layout/Sidebar';
 
-const Dashboard = (props) => {
+const Dashboard = ({ portfolio, loading }) => {
   return (
     <section className='container static flex-1 h-full max-h-full min-w-full flex'>
-      <Sidebar />
-      <Overview />
+      {loading ? (
+        <p>loading</p>
+      ) : (
+        <Fragment>
+          {portfolio.accounts.length < 1 ? (
+            <NewAccount />
+          ) : (
+            <Fragment>
+              <Sidebar />
+              <Overview portfolio={portfolio} />
+            </Fragment>
+          )}
+        </Fragment>
+      )}
     </section>
   );
 };
 
-Dashboard.propTypes = {};
+Dashboard.propTypes = {
+  portfolio: PropTypes.object.isRequired,
+};
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+  portfolio: state.portfolio,
+  loading: state.portfolio.loading,
+});
+
+export default connect(mapStateToProps)(Dashboard);

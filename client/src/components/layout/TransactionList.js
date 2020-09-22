@@ -6,7 +6,7 @@ import { formatMoney } from 'accounting';
 
 const TransactionList = ({ accounts }) => {
   return (
-    <div className='text-gray-600 bg-white pt-2 pb-4 mb-2 mt-6 w-full'>
+    <div className='text-gray-600 bg-white pt-2 pb-2 mb-2 mt-6 w-full'>
       <table className='table-auto w-full text-xl'>
         <thead className='bg-gray-300'>
           <tr>
