@@ -14,7 +14,7 @@ import { BsGraphUp } from 'react-icons/bs';
 import TransactionInput from '../modals/TransactionInput';
 import NewAccountModal from '../modals/NewAccountModal';
 
-const Sidebar = ({ accounts, loading }) => {
+const Sidebar = ({ accounts, loading, url }) => {
   const [transactionModal, setTransactionModal] = useState({
     open: false,
     type: null,
@@ -36,7 +36,7 @@ const Sidebar = ({ accounts, loading }) => {
   return (
     <aside className='bg-gray-700 shadow-xl font-normal'>
       <ul className=' mt-4 w-full'>
-        <Link to='/dashboard'>
+        <Link to={`/dashboard`}>
           <li className='pl-4 pr-4 py-2 hover:bg-blue-600 flex items-center'>
             <FaHome style={{ marginRight: 8 }} />
             Overview
@@ -96,7 +96,7 @@ const Sidebar = ({ accounts, loading }) => {
             ) : (
               accounts.map((account) => {
                 return (
-                  <Link to={`/dashboard/account/${account._id}`}>
+                  <Link to={`/accounts/${account._id}`}>
                     <li className='px-4 py-2 my-2 rounded-full flex items-center align-center hover:bg-gray-800'>
                       {returnIcon(account.type)}
                       {account.name.toUpperCase()}
@@ -144,9 +144,9 @@ const Sidebar = ({ accounts, loading }) => {
   );
 };
 
-// Sidebar.propTypes = {
-//   accounts: PropTypes.array.isRequired,
-// };
+Sidebar.propTypes = {
+  accounts: PropTypes.array.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   accounts: state.portfolio.accounts,

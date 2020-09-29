@@ -17,6 +17,7 @@ import { Provider } from 'react-redux';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 import store from './store';
+import AccountSummary from './pages/AccountSummary';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -38,6 +39,10 @@ const App = () => {
             <Route exact path='/register' component={Register} />
             <PrivateRoute exact path='/newaccount' component={NewAccount} />
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
+            <PrivateRoute
+              path='/accounts/:accountID'
+              component={AccountSummary}
+            />
             <PrivateRoute exact path='/news' component={News} />
           </Switch>
         </Router>

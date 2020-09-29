@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { newTransaction } from '../../actions/transaction';
-import { set } from 'mongoose';
-
 const TransactionInput = ({
   closeModal,
   accounts,

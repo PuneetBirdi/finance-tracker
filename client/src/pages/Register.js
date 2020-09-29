@@ -6,7 +6,14 @@ import { connect } from 'react-redux';
 import { setAlert } from '../actions/alert';
 import { register } from '../actions/auth';
 
-const Register = ({ loading, error, user, register, isAuthenticated }) => {
+const Register = ({
+  portLoading,
+  loading,
+  error,
+  user,
+  register,
+  isAuthenticated,
+}) => {
   //COMPONENT LEVEL STATE
   const [credentials, setCredentials] = useState({});
   const [profile, setProfile] = useState({});
@@ -65,7 +72,7 @@ const Register = ({ loading, error, user, register, isAuthenticated }) => {
     }
   };
 
-  if (isAuthenticated) {
+  if (isAuthenticated && !portLoading) {
     return <Redirect to='/dashboard' />;
   }
   return (
@@ -332,6 +339,7 @@ Register.propTypes = {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   loading: state.auth.loading,
+  portLoading: state.portfolio.loading,
   user: state.user,
   error: state.auth.error,
 });

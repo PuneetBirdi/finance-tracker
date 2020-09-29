@@ -2,8 +2,9 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { styles } from '../css/styles';
 import { formatMoney } from 'accounting';
+import { connect } from 'react-redux';
 import Linegraph from '../components/charts/Linegraph';
-import TransactionList from '../components/layout/TransactionList';
+import AccountList from '../components/layout/AccountList';
 import Card from '../components/layout/Card';
 
 const Overview = ({ portfolio }) => {
@@ -62,7 +63,7 @@ const Overview = ({ portfolio }) => {
                   }, 0)}
                 />
               </div>
-              <TransactionList accounts={portfolio.accounts} />
+              <AccountList accounts={portfolio.accounts} />
             </div>
           </Fragment>
         )}
@@ -75,4 +76,9 @@ Overview.propTypes = {
   portfolio: PropTypes.object.isRequired,
 };
 
-export default Overview;
+const mapStateToProps = (state) => ({
+  portfolio: state.portfolio,
+  loading: state.portfolio.loading,
+});
+
+export default connect(mapStateToProps)(Overview);

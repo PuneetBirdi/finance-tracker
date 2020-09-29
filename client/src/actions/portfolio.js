@@ -9,11 +9,11 @@ import {
   CLEAR_ERROR,
 } from './types';
 import { newTransaction } from './transaction';
-import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
 
 //Load user
 export const loadPortfolio = () => async (dispatch) => {
+  setLoading();
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
