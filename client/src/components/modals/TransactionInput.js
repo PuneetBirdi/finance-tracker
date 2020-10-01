@@ -9,12 +9,13 @@ const TransactionInput = ({
   error,
   newTransaction,
   loading,
+  account,
 }) => {
   const [transaction, setTransaction] = useState({
     description: '',
     amount: '',
     type: type,
-    account: '',
+    account: account || '',
   });
 
   const handleInput = (e) => {

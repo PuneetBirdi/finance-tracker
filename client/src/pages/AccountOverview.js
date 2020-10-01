@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { styles } from '../css/styles';
 import { formatMoney } from 'accounting';
@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Linegraph from '../components/charts/Linegraph';
 import TransactionList from '../components/layout/TransactionList';
 import { getTransactions } from '../actions/transaction';
+import TransactionInput from '../components/modals/TransactionInput';
 
 const AccountOverview = ({
   loading,
@@ -17,6 +18,14 @@ const AccountOverview = ({
   useEffect(() => {
     getTransactions(account);
   }, [account]);
+
+  const [transactionModal, setTransactionModal] = useState({
+    open: false,
+    type: null,
+    account: null,
+  });
+
+  const accountInfo = portfolio.accounts.find(({ _id }) => _id === account);
   return (
     <section className='m-8 flex-1 w-screen'>
       <div className={styles.card.concat('w-full h-full flex flex-col')}>
@@ -42,9 +51,56 @@ const AccountOverview = ({
             ></path>
           </svg>
         ) : (
-          <TransactionList transactions={transactions} />
+          <Fragment>
+            <div className='flex'>
+              <div className='flex-1 text-left'>
+                <p className='text-xs text-gray-700 font-bold'>
+                  Account Balance
+                </p>
+                <h1 className='text-5xl font-bold text-gray-900'>
+                  {formatMoney(accountInfo.balance)}
+                </h1>
+              </div>
+              <div className='flex items-center justify-between'>
+                <button
+                  className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2'
+                  type='button'
+                  onClick={(e) =>
+                    setTransactionModal({
+                      open: true,
+                      type: 'deposit',
+                      account: account,
+                    })
+                  }
+                >
+                  Deposit
+                </button>
+                <button
+                  className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2'
+                  type='button'
+                  onClick={(e) =>
+                    setTransactionModal({
+                      open: true,
+                      type: 'withdrawal',
+                      account: account,
+                    })
+                  }
+                >
+                  Withdraw
+                </button>
+              </div>
+            </div>
+            <TransactionList transactions={transactions} />
+          </Fragment>
         )}
       </div>
+      {transactionModal.open ? (
+        <TransactionInput
+          closeModal={() => setTransactionModal(!transactionModal)}
+          type={transactionModal.type}
+          account={account}
+        />
+      ) : null}
     </section>
   );
 };
