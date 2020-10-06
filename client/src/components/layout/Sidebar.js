@@ -116,7 +116,7 @@ const Sidebar = ({ accounts, loading, url }) => {
             </Link>
           </ul>
         </li>
-        <li className='pl-4 py-2 mt-4'>
+        {/* <li className='pl-4 py-2 mt-4'>
           <p className='font-semibold'>Information</p>
           <ul className='pr-4'>
             <Link to='/news'>
@@ -126,7 +126,7 @@ const Sidebar = ({ accounts, loading, url }) => {
               </li>
             </Link>
           </ul>
-        </li>
+        </li> */}
       </ul>
       {transactionModal.open ? (
         <TransactionInput
