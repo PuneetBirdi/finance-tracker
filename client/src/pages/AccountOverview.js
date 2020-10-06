@@ -55,7 +55,7 @@ const AccountOverview = ({
             <div className='flex'>
               <div className='flex-1 text-left'>
                 <p className='text-xs text-gray-700 font-bold'>
-                  Account Balance
+                  {accountInfo.name.toUpperCase()}
                 </p>
                 <h1 className='text-5xl font-bold text-gray-900'>
                   {formatMoney(accountInfo.balance)}
