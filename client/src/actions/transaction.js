@@ -18,7 +18,7 @@ export const newTransaction = (transaction) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.post('api/transactions', transaction, config);
+    const res = await axios.post('/api/transactions', transaction, config);
     dispatch({
       type: NEW_TRANSACTION,
       payload: res.data,
