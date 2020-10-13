@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Switch, Route, Router } from 'react-router-dom';
 import NewAccount from '../pages/NewAccount';
 import PropTypes from 'prop-types';

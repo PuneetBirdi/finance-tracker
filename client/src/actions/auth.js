@@ -50,6 +50,7 @@ export const register = (formData) => async (dispatch) => {
       payload: res.data,
     });
     loadUser();
+    dispatch(loadPortfolio());
   } catch (err) {
     console.log(err);
     dispatch({

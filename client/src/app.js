@@ -29,7 +29,7 @@ const App = () => {
   }, []);
   return (
     <Provider store={store}>
-      <div className='bg-blue-600 min-h-screen text-white flex flex-col'>
+      <div className='bg-blue-600 min-h-screen max-h-screen text-white flex flex-col'>
         <div className='flex'>
           <Navbar />
         </div>
