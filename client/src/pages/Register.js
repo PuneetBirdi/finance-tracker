@@ -10,7 +10,6 @@ const Register = ({
   portLoading,
   loading,
   error,
-  user,
   register,
   isAuthenticated,
 }) => {
@@ -72,7 +71,7 @@ const Register = ({
     }
   };
 
-  if (isAuthenticated && !portLoading) {
+  if (isAuthenticated && !portLoading && !loading) {
     return <Redirect to='/dashboard' />;
   }
   return (

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../actions/auth';
 
-const Login = ({ login, isAuthenticated, loading, error, user }) => {
+const Login = ({ login, isAuthenticated, loading, error, portLoading }) => {
   //COMPONENT LEVEL STATE
   const [credentials, setCredentials] = useState({
     email: '',
@@ -26,7 +26,7 @@ const Login = ({ login, isAuthenticated, loading, error, user }) => {
   };
 
   //Redirect if logged in
-  if (isAuthenticated) {
+  if (isAuthenticated && !portLoading && !loading) {
     return <Redirect to='/dashboard' />;
   }
   return (
@@ -140,6 +140,7 @@ Login.propTypes = {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  portLoading: state.portfolio.loading,
   loading: state.auth.loading,
   error: state.auth.error,
   user: state.auth.user,

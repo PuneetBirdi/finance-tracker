@@ -49,8 +49,7 @@ export const register = (formData) => async (dispatch) => {
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
-    loadUser();
-    dispatch(loadPortfolio());
+    dispatch(loadUser())
   } catch (err) {
     console.log(err);
     dispatch({

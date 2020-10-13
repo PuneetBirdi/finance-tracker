@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect } from 'react';
-import { Switch, Route, Router } from 'react-router-dom';
 import NewAccount from '../pages/NewAccount';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -14,7 +13,7 @@ const Dashboard = ({ portfolio, loading }) => {
         <p>loading</p>
       ) : (
         <Fragment>
-          {portfolio.accounts.length < 1 ? (
+          {portfolio.accounts.length < 1 || portfolio.accounts === 'undefined' ? (
             <NewAccount />
           ) : (
             <Fragment>

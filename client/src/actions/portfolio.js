@@ -17,6 +17,7 @@ export const loadPortfolio = () => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
+  console.log('test3')
   try {
     const res = await axios.get('/api/auth/portfolio');
     dispatch({

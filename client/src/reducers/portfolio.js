@@ -34,7 +34,7 @@ export default function(state = initialState, action) {
     case CLEAR_PORTFOLIO:
       localStorage.removeItem('token');
       return {
-        user: null,
+        loading:true,
         error: payload,
       };
     case CLEAR_ERROR:

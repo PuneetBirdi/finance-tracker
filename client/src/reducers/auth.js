@@ -33,23 +33,22 @@ export default function(state = initialState, action) {
         isAuthenticated: true,
         loading: false,
       };
-    case REGISTER_FAIL:
-    case AUTH_ERROR:
-    case LOGIN_FAIL:
     case CLEAR_PROFILE:
     case LOGOUT:
       localStorage.removeItem('token');
       return {
-        ...state,
-        token: null,
-        error: payload,
-        email: null,
-        portfolioHistory: null,
-        created: null,
-        user_id: null,
-        isAuthenticated: false,
+        isAuthenticated: null,
         loading: false,
+        error: null,
       };
+    case REGISTER_FAIL:
+    case AUTH_ERROR:
+    case LOGIN_FAIL:
+      return{
+        ...state,
+        error: payload,
+        loading:false
+      }
     case USER_LOADED:
       return {
         ...state,
