@@ -8,7 +8,7 @@ import Sidebar from '../components/layout/Sidebar';
 
 const Dashboard = ({ portfolio, loading }) => {
   return (
-    <section className='container static flex-1 h-full max-h-full min-w-full flex'>
+    <section className='container static flex-1 min-w-full flex'>
       {loading ? (
         <p>loading</p>
       ) : (

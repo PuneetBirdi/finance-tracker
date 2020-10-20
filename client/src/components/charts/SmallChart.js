@@ -1,22 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AreaChart, Area } from 'recharts';
+import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 
 const SmallChart = ({ color, snapshots }) => {
   return (
+    <ResponsiveContainer>
     <AreaChart
-      width={200}
-      height={30}
-      data={snapshots}
-      margin={{
-        top: 5,
-        right: 0,
-        left: 0,
-        bottom: 5,
-      }}
-    >
-      <Area type='monotone' dataKey='balance' stroke={color} fill={color} />
+    data={snapshots}
+    margin={{ top: 20, right: 0, left: 0, bottom: 0 }}>      
+          <Area type='monotone' dataKey='balance' fillOpacity={0.15} stroke='none' fill={color} />
     </AreaChart>
+    </ResponsiveContainer>
   );
 };
 
