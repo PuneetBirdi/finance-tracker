@@ -3,9 +3,14 @@ import PropTypes from 'prop-types'
 import SmallChart from '../charts/SmallChart';
 import { formatMoney } from 'accounting';
 
-const AccountCard = ({name, balance, snapshots, type}) => {
+const AccountCard = ({name, balance, snapshots, id, history}) => {
+
+   const redirect = (id) =>{
+      history.push(`/accounts/${id}`)
+   }
+
    return (
-      <div className='relative cursor-pointer w-1/4 h-32 mx-4 bg-white text-black shadow-xl rounded-md' onClick={e => console.log("Clicked")}>
+      <div className='block relative cursor-pointer w-1/5 h-32 m-4 bg-white text-black shadow-xl rounded-md' onClick={e =>  redirect(id)}>
          <SmallChart color={'purple'} snapshots={snapshots}/>
          <div className='absolute w-full h-full bottom-0 left-0 p-3'>
             <p className='font-semibold text-xs'>{name.toUpperCase()}</p>

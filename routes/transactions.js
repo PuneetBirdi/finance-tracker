@@ -108,7 +108,7 @@ router.post(
 //@access   Private
 router.get('/:id', auth, async (req, res) => {
   try {
-    const transactions = await Transaction.find({ account: req.params.id });
+    const transactions = await Transaction.find({ account: req.params.id }).sort({time: -1}).limit(20);
     res.json(transactions);
   } catch (err) {
     console.error(err.message);

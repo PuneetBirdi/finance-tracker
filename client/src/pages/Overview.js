@@ -7,7 +7,7 @@ import Linegraph from '../components/charts/Linegraph';
 import AccountList from '../components/layout/AccountList';
 import Card from '../components/layout/Card';
 
-const Overview = ({ portfolio }) => {
+const Overview = ({ portfolio, history }) => {
   return (
     <section className='m-8 flex-1 w-screen'>
       <div className={styles.card.concat('w-full h-full flex flex-col')}>
@@ -33,15 +33,15 @@ const Overview = ({ portfolio }) => {
             ></path>
           </svg>
         ) : (
-          <Fragment>
-            <div className='w-3/4 text-left mr-4'>
+          <div className='flex flex-col h-full'>
+            <div className='flex-1 w-3/4 text-left mr-4'>
               <p className='text-xs text-gray-700 font-bold'>Portfolio Value</p>
               <h1 className='text-5xl font-bold text-gray-900'>
-                {formatMoney(portfolio.details.totalValue)}
+              {formatMoney(portfolio.details.totalValue)}
               </h1>
             </div>
-            <div class='flex flex-wrap'>
-              <div class='w-3/4 h-1/2'>
+            <div style={{flex: 3, display:'flex'}}>
+              <div class='w-3/4'>
                 <Linegraph />
               </div>
               <div class='w-1/4 flex flex-col justify-between'>
@@ -63,9 +63,11 @@ const Overview = ({ portfolio }) => {
                   }, 0)}
                 />
               </div>
-              <AccountList accounts={portfolio.accounts} />
             </div>
-          </Fragment>
+            <div style={{flex: 2}}>
+              <AccountList accounts={portfolio.accounts} history={history}/>
+            </div>
+          </div>
         )}
       </div>
     </section>

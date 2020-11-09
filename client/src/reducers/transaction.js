@@ -25,7 +25,7 @@ export default function(state = initialState, action) {
     case GET_TRANSACTIONS:
       return {
         ...state,
-        transactions: [...payload].reverse(),
+        transactions: [...payload],
         loading: false,
       };
     case TRANSACTION_ERROR:

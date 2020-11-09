@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Overview from './Overview';
 import Sidebar from '../components/layout/Sidebar';
 
-const Dashboard = ({ portfolio, loading }) => {
+const Dashboard = ({ portfolio, loading, history }) => {
   return (
     <section className='container static flex-1 min-w-full flex'>
       {loading ? (
@@ -18,7 +18,7 @@ const Dashboard = ({ portfolio, loading }) => {
           ) : (
             <Fragment>
               <Sidebar />
-              <Overview portfolio={portfolio} />
+              <Overview portfolio={portfolio} history={history} />
             </Fragment>
           )}
         </Fragment>

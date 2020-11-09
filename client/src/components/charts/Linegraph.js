@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 const Linegraph = ({ data }) => {
   return (
-    <div style={{ width: '100%', height: 400 }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <ResponsiveContainer>
         <AreaChart
           data={data}
