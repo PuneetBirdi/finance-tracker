@@ -18,7 +18,7 @@ export default function(state = initialState, action) {
     case NEW_TRANSACTION:
       return {
         ...state,
-        transactions: [...state.transactions, payload],
+        transactions: [payload, ...state.transactions,],
         loading: false,
         error: null,
       };
